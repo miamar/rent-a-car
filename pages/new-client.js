@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 export default function SignupForm() {
 
     const saveToDatabase = async (values) => {
-        const res = await fetch('api/registration', {
+        const res = await fetch('api/new-client', {
             method: 'POST',
             body: JSON.stringify(values),
             headers: {
@@ -19,26 +19,32 @@ export default function SignupForm() {
     const validate = values => {
         const errors = {};
 
-        if (!values.role) {
-            errors.role = 'Required';
+        if (!values.firstName) {
+            errors.firstName = 'Required';
         }
 
-        if (!values.username) {
-            errors.username = 'Required';
-        } else if (values.username.length < 8) {
-            errors.username = 'Must be 8 characters or more';
+        if (!values.lastName) {
+            errors.lastName = 'Required';
+        }
+
+        if (!values.oib) {
+            errors.oib = 'Required';
+        }
+
+        if (!values.address) {
+            errors.address = 'Required';
         }
 
         if (!values.email) {
             errors.email = 'Required';
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-            errors.email = 'Invalid email address';
         }
 
-        if (!values.password) {
-            errors.password = 'Required';
-        } else if (values.password.length < 8) {
-            errors.password = 'Must be 8 characters or more';
+        if (!values.phoneNumber) {
+            errors.phoneNumber = 'Required';
+        }
+
+        if (!values.dateOfBirth) {
+            errors.dateOfBirth = 'Required';
         }
 
         return errors;
@@ -47,17 +53,13 @@ export default function SignupForm() {
     // be called when the form is submitted
     const formik = useFormik({
         initialValues: {
-            role: '',
-            username: '',
-            email: '',
-            password: '',
             firstName: '',
             lastName: '',
             oib: '',
             address: '',
+            email: '',
             phoneNumber: '',
-            dateOfBirth: '',
-            pay: ''
+            dateOfBirth: ''
         },
         validate,
         onSubmit: values => {
@@ -74,37 +76,61 @@ export default function SignupForm() {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Registration</h1>
+                <h1 className="">New client</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className={styles.forms}>
-                        <label htmlFor="role">Role</label>
-                        <select
-                            id="role"
-                            name="role"
-                            onChange={formik.handleChange}
-                            value={formik.values.role}
-                            className={styles.input} >
-                            <option value=""/>
-                            <option value="user">user</option>
-                            <option value="admin">admin</option>
-                        </select>
-                    </div>
-                    {formik.errors.role ? <div className={styles.error}>{formik.errors.role}</div> : null}
-
-                    <div className={styles.forms}>
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="firstName">First Name</label>
                         <input
                             className={styles.input}
-                            id="username"
-                            name="username"
+                            id="firstName"
+                            name="firstName"
                             type="text"
                             onChange={formik.handleChange}
-                            value={formik.values.username}
+                            value={formik.values.firstName}
                         />
                     </div>
-                    {formik.errors.username ? <div className={styles.error}>{formik.errors.username}</div> : null}
+                    {formik.errors.firstName ? <div className={styles.error}>{formik.errors.firstName}</div> : null}
+
+                    <div className={styles.forms}>
+                        <label htmlFor="lastName">Last Name</label>
+                        <input
+                            className={styles.input}
+                            id="lastName"
+                            name="lastName"
+                            type="text"
+                            onChange={formik.handleChange}
+                            value={formik.values.lastName}
+                        />
+                    </div>
+                    {formik.errors.lastName ? <div className={styles.error}>{formik.errors.lastName}</div> : null}
+
+                    <div className={styles.forms}>
+                        <label htmlFor="oib">OIB</label>
+                        <input
+                            className={styles.input}
+                            id="oib"
+                            name="oib"
+                            type="text"
+                            onChange={formik.handleChange}
+                            value={formik.values.oib}
+                        />
+                    </div>
+                    {formik.errors.oib ? <div className={styles.error}>{formik.errors.oib}</div> : null}
+
+                    <div className={styles.forms}>
+                        <label htmlFor="address">Address</label>
+                        <input
+                            className={styles.input}
+                            id="address"
+                            name="address"
+                            type="text"
+                            onChange={formik.handleChange}
+                            value={formik.values.address}
+                        />
+                    </div>
+                    {formik.errors.address ? <div className={styles.error}>{formik.errors.address}</div> : null}
 
                     <div className={styles.forms}>
                         <label htmlFor="email">Email Address</label>
@@ -120,67 +146,6 @@ export default function SignupForm() {
                     {formik.errors.email ? <div className={styles.error}>{formik.errors.email}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="password">Password</label>
-                        <input
-                            className={styles.input}
-                            id="password"
-                            name="password"
-                            type="password"
-                            onChange={formik.handleChange}
-                            value={formik.values.password}
-                        />
-                    </div>
-                    {formik.errors.password ? <div className={styles.error}>{formik.errors.password}</div> : null}
-
-                    <div className={styles.forms}>
-                        <label htmlFor="firstName">First Name</label>
-                        <input
-                            className={styles.input}
-                            id="firstName"
-                            name="firstName"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.firstName}
-                        />
-                    </div>
-
-                    <div className={styles.forms}>
-                        <label htmlFor="lastName">Last Name</label>
-                        <input
-                            className={styles.input}
-                            id="lastName"
-                            name="lastName"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.lastName}
-                        />
-                    </div>
-
-                    <div className={styles.forms}>
-                        <label htmlFor="oib">OIB</label>
-                        <input
-                            className={styles.input}
-                            id="oib"
-                            name="oib"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.oib}
-                        />
-                    </div>
-
-                    <div className={styles.forms}>
-                        <label htmlFor="address">Address</label>
-                        <input
-                            className={styles.input}
-                            id="address"
-                            name="address"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.address}
-                        />
-                    </div>
-
-                    <div className={styles.forms}>
                         <label htmlFor="phoneNumber">Phone Number</label>
                         <input
                             className={styles.input}
@@ -191,6 +156,7 @@ export default function SignupForm() {
                             value={formik.values.phoneNumber}
                         />
                     </div>
+                    {formik.errors.phoneNumber ? <div className={styles.error}>{formik.errors.phoneNumber}</div> : null}
 
                     <div className={styles.forms}>
                         <label htmlFor="dateOfBirth">Date of birth</label>
@@ -203,18 +169,7 @@ export default function SignupForm() {
                             value={formik.values.dateOfBirth}
                         />
                     </div>
-
-                    <div className={styles.forms}>
-                        <label htmlFor="pay">Pay</label>
-                        <input
-                            className={styles.input}
-                            id="pay"
-                            name="pay"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.pay}
-                        />
-                    </div>
+                    {formik.errors.dateOfBirth ? <div className={styles.error}>{formik.errors.dateOfBirth}</div> : null}
 
                     <button className={styles.button} type="submit">Submit</button>
                     <button className={styles.button}><a href="/home">Cancel</a></button>

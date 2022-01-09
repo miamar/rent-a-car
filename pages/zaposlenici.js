@@ -1,8 +1,24 @@
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
-import Image from "next/image";
+import {PrismaClient} from "@prisma/client";
 
-export default function Home() {
+export default function Home(props) {
+
+    function renderTableData() {
+
+        return props.data.map((worker, index) => {
+            const { id, firstName, lastName, email } = worker
+            return (
+                <tr key={id}>
+                    <td>{id}</td>
+                    <td>{firstName}</td>
+                    <td>{lastName}</td>
+                    <td>{email}</td>
+                </tr>
+            )
+        })
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -12,13 +28,35 @@ export default function Home() {
             </Head>
 
             <main className={styles.main}>
-                <h1 className={styles.title}>
+                <h3 className={styles.title}>
                     Zaposlenici!
-                </h1>
+                </h3>
+
+                <div>
+                    <table>
+                        <tbody>
+                        {renderTableData()}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <button className={styles.button}><a href="/register">Add new</a></button>
+                    <button className={styles.button}><a href="/home">Home page</a></button>
+                </div>
 
 
             </main>
 
         </div>
     )
+}
+
+export async function getServerSideProps() {
+    const prisma = new PrismaClient()
+    const allWorkers = await prisma.worker.findMany()
+    const data = JSON.parse(JSON.stringify(allWorkers))
+    return {
+        props : { data }
+    }
 }

@@ -1,8 +1,8 @@
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
-import Image from "next/image";
+import { PrismaClient } from '@prisma/client'
 
-export default function Home() {
+export default function Home(props) {
     return (
         <div className={styles.container}>
             <Head>
@@ -18,7 +18,11 @@ export default function Home() {
 
                 <p className={styles.description}>
                     Get started by logging in here &rarr;{' '}
-                    <code className={styles.code}>Log in</code>
+                    <code className={styles.code}><a href="/login">Log in</a></code>
+                </p>
+
+                <p className="">
+                    OR: You are currently logged in as <code className={styles.code}>{props.allUsers[1].username}</code>
                 </p>
 
                 <div className={styles.grid}>
@@ -60,4 +64,12 @@ export default function Home() {
 
         </div>
     )
+}
+
+export async function getServerSideProps() {
+    const prisma = new PrismaClient()
+    const allUsers = await prisma.auth.findMany()
+    return {
+        props : { allUsers }
+    }
 }
