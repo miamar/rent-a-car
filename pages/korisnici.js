@@ -40,7 +40,7 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button className={styles.button}><a href="/new_client">Add new</a></button>
+                    <button className={styles.button}><a href="/new-client">Add new</a></button>
                     <button className={styles.button}><a href="/home">Home page</a></button>
                 </div>
 
