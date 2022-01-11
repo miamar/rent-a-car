@@ -6,14 +6,17 @@ export default function Home(props) {
 
     function renderTableData() {
 
-        return props.data.map((worker, index) => {
-            const { id, firstName, lastName, email } = worker
+        return props.data.map((collab, index) => {
+            const { id, type, name, website, description } = collab
             return (
                 <tr key={id}>
                     <td>{id}</td>
-                    <td>{firstName}</td>
-                    <td>{lastName}</td>
-                    <td>{email}</td>
+                    <td>{type}</td>
+                    <td>{name}</td>
+                    <td>{website}</td>
+                    <td>{description}</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
                 </tr>
             )
         })
@@ -28,9 +31,7 @@ export default function Home(props) {
             </Head>
 
             <main className={styles.main}>
-                <h3 className={styles.title}>
-                    Zaposlenici!
-                </h3>
+                <h1 className="">Vanjska suradnja</h1>
 
                 <div>
                     <table>
@@ -41,7 +42,7 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button className={styles.button}><a href="/register">Add new</a></button>
+                    <button className={styles.button}><a href="/forms/new-collab">Add new</a></button>
                     <button className={styles.button}><a href="/home">Home page</a></button>
                 </div>
 
@@ -54,8 +55,8 @@ export default function Home(props) {
 
 export async function getServerSideProps() {
     const prisma = new PrismaClient()
-    const allWorkers = await prisma.worker.findMany()
-    const data = JSON.parse(JSON.stringify(allWorkers))
+    const allCollab = await prisma.collaborator.findMany()
+    const data = JSON.parse(JSON.stringify(allCollab))
     return {
         props : { data }
     }

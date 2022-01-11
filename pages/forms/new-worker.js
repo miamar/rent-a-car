@@ -1,4 +1,4 @@
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 import Head from "next/head";
 import React from 'react';
 import { useFormik } from 'formik';
@@ -74,7 +74,7 @@ export default function SignupForm() {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Registration</h1>
+                <h1 className="">Register new worker</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 

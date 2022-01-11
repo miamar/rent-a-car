@@ -60,3 +60,18 @@ model Vehicle {
   client       Client @relation(fields: [clientId], references: [id])
   clientId     Int
 }
+
+model Office {
+  id           Int @default(autoincrement()) @id
+  address      String
+  phoneNumber  String
+  workHours    String
+}
+
+model Collaborator {
+  id           Int @default(autoincrement()) @id
+  name         String
+  type         String
+  description  String
+  website      String
+}

@@ -5,14 +5,17 @@ import {PrismaClient} from "@prisma/client";
 export default function Home(props) {
 
     function renderTableData() {
-        return props.data.map((client, index) => {
-            const { id, firstName, lastName, email } = client
+
+        return props.data.map((worker, index) => {
+            const { id, firstName, lastName, email } = worker
             return (
                 <tr key={id}>
                     <td>{id}</td>
                     <td>{firstName}</td>
                     <td>{lastName}</td>
                     <td>{email}</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
                 </tr>
             )
         })
@@ -27,9 +30,7 @@ export default function Home(props) {
             </Head>
 
             <main className={styles.main}>
-                <h3 className={styles.title}>
-                    Korisnici!
-                </h3>
+                <h1 className="">Zaposlenici</h1>
 
                 <div>
                     <table>
@@ -40,7 +41,7 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button className={styles.button}><a href="/new_client">Add new</a></button>
+                    <button className={styles.button}><a href="/forms/new-worker">Add new</a></button>
                     <button className={styles.button}><a href="/home">Home page</a></button>
                 </div>
 
@@ -53,8 +54,8 @@ export default function Home(props) {
 
 export async function getServerSideProps() {
     const prisma = new PrismaClient()
-    const allClients = await prisma.client.findMany()
-    const data = JSON.parse(JSON.stringify(allClients))
+    const allWorkers = await prisma.worker.findMany()
+    const data = JSON.parse(JSON.stringify(allWorkers))
     return {
         props : { data }
     }

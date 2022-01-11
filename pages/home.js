@@ -26,26 +26,26 @@ export default function Home(props) {
                 </p>
 
                 <div className={styles.grid}>
-                    <a href="/vozila" className={styles.card}>
+                    <a href="/vehicle" className={styles.card}>
                         <h2>Vozila &rarr;</h2>
                         <p>Informacije o vozilima, unos novih i izmjena postojećih podataka.</p>
                     </a>
 
-                    <a href="/zaposlenici" className={styles.card}>
+                    <a href="/worker" className={styles.card}>
                         <h2>Zaposlenici &rarr;</h2>
                         <p>Informacije o zaposlenicima, unos i izmjena postojećih podataka.</p>
                     </a>
 
                     <a
-                        href="/korisnici"
+                        href="/client"
                         className={styles.card}
                     >
-                        <h2>Korisnici &rarr;</h2>
+                        <h2>Klijenti &rarr;</h2>
                         <p>Informacije o korisnicima, unos novih i izmjena postojećih podataka.</p>
                     </a>
 
                     <a
-                        href="/poslovnice"
+                        href="/office"
                         className={styles.card}
                     >
                         <h2>Poslovnice &rarr;</h2>
@@ -53,7 +53,7 @@ export default function Home(props) {
                     </a>
 
                     <a
-                        href="/suradnja"
+                        href="/collab"
                         className={styles.card}
                     >
                         <h2>Vanjska suradnja &rarr;</h2>

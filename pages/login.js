@@ -74,10 +74,11 @@ export default function SignupForm() {
                     </div>
 
                     <button className={styles.button} type="submit">Submit</button>
+                    <button className={styles.button}><a href="/home">Cancel</a></button>
 
                     <p><a href={"#"}>Forgot password?</a></p>
 
-                    <p><a href="/register">Don't have an account? Register.</a></p>
+                    <p><a href="/forms/new-worker">Don't have an account? Register.</a></p>
 
                 </form>
             </main>

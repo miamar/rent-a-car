@@ -14,6 +14,8 @@ export default function Home(props) {
                     <td>{plates}</td>
                     <td>{make}</td>
                     <td>{model}</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
                 </tr>
             )
         })
@@ -28,9 +30,7 @@ export default function Home(props) {
             </Head>
 
             <main className={styles.main}>
-                <h3 className={styles.title}>
-                    Vozila!
-                </h3>
+                <h1 className="">Vozila</h1>
 
                 <div>
                     <table>
@@ -41,7 +41,7 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button className={styles.button}><a href="/new_vehicle">Add new</a></button>
+                    <button className={styles.button}><a href="/forms/new-vehicle">Add new</a></button>
                     <button className={styles.button}><a href="/home">Home page</a></button>
                 </div>
 

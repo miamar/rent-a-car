@@ -1,4 +1,4 @@
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 import Head from "next/head";
 import React from 'react';
 import { useFormik } from 'formik';
@@ -35,10 +35,6 @@ export default function SignupForm() {
             errors.year = 'Required';
         }
 
-        if (!values.price) {
-            errors.price = 'Required';
-        }
-
         return errors;
     };
     // Pass the useFormik() hook initial form values and a submit function that will
@@ -65,7 +61,7 @@ export default function SignupForm() {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">New client</h1>
+                <h1 className="">New vehicle</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 
@@ -171,7 +167,6 @@ export default function SignupForm() {
                             value={formik.values.price}
                         />
                     </div>
-                    {formik.errors.price ? <div className={styles.error}>{formik.errors.price}</div> : null}
 
                     <button className={styles.button} type="submit">Submit</button>
                     <button className={styles.button}><a href="/home">Cancel</a></button>
