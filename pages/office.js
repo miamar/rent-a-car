@@ -27,10 +27,9 @@ export default function Home(props) {
             const { id, address, phoneNumber, workHours } = office
             return (
                 <tr key={id}>
-                    <td>{id}</td>
-                    <td>{address}</td>
-                    <td>{phoneNumber}</td>
-                    <td>{workHours}</td>
+                    <td className={styles.tabletd}>{address}</td>
+                    <td className={styles.tabletd}>{phoneNumber}</td>
+                    <td className={styles.tabletd}>{workHours}</td>
                     <td><button onClick={() => setEditedOffice(office)}>Edit</button></td>
                     <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
                 </tr>
@@ -56,6 +55,11 @@ export default function Home(props) {
                 <div>
                     <table>
                         <tbody>
+                        <tr>
+                            <td className={styles.tablefirst}>address</td>
+                            <td className={styles.tablefirst}>phone Number</td>
+                            <td className={styles.tablefirst}>working Hours</td>
+                        </tr>
                         {renderTableData()}
                         </tbody>
                     </table>

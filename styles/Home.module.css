@@ -136,6 +136,18 @@
   padding: 5px;
 }
 
+.tablefirst {
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  padding-right: 20px;
+}
+
+.tabletd {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  padding-right: 25px;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

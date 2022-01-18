@@ -54,10 +54,10 @@ export default function EditCollabForm({onCancel, data}) {
     const formik = useFormik({
         initialValues: {
             id: selected.id ? selected.id : '',
-            name: '',
-            type: '',
-            description: '',
-            website: ''
+            name: selected.name ? selected.name : '',
+            type: selected.type ? selected.type : '',
+            description: selected.description ? selected.description : '',
+            website: selected.website ? selected.website : ''
         },
         validate,
         onSubmit: values => {

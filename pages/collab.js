@@ -28,11 +28,10 @@ export default function Home(props) {
             const { id, type, name, website, description } = collab
             return (
                 <tr key={id}>
-                    <td>{id}</td>
-                    <td>{type}</td>
-                    <td>{name}</td>
-                    <td>{website}</td>
-                    <td>{description}</td>
+                    <td className={styles.tabletd}>{type}</td>
+                    <td className={styles.tabletd}>{name}</td>
+                    <td className={styles.tabletd}><a href={website} target="_blank">{website}</a></td>
+                    <td className={styles.tabletd}>{description}</td>
                     <td><button onClick={() => setEditedCollab(collab)}>Edit</button></td>
                     <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
                 </tr>
@@ -58,6 +57,12 @@ export default function Home(props) {
                 <div>
                     <table>
                         <tbody>
+                        <tr >
+                            <td className={styles.tablefirst}>type</td>
+                            <td className={styles.tablefirst}>name</td>
+                            <td className={styles.tablefirst}>website</td>
+                            <td className={styles.tablefirst}>description</td>
+                        </tr>
                         {renderTableData()}
                         </tbody>
                     </table>

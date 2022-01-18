@@ -54,10 +54,10 @@ export default function EditVehicleForm({onCancel, data}) {
     const formik = useFormik({
         initialValues: {
             id: selected.id ? selected.id : '',
-            plates: '',
-            make: '',
-            model: '',
-            year: ''
+            plates: selected.plates ? selected.plates : '',
+            make: selected.make ? selected.make : '',
+            model: selected.model ? selected.model : '',
+            year: selected.year ? selected.year : '',
         },
         validate,
         onSubmit: values => {

@@ -3,7 +3,6 @@ import Head from "next/head";
 import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditVehicleForm from "./forms/edit-vehicle";
-import EditOfficeForm from "./forms/edit-office";
 
 export default function Home(props) {
     const [editedVehicle, setEditedVehicle] = useState(null)
@@ -25,13 +24,16 @@ export default function Home(props) {
     function renderTableData() {
 
         return props.data.map((vehicle, index) => {
-            const { id, plates, make, model } = vehicle
+            const { id, plates, make, model, year, fuel, price, rented } = vehicle
             return (
                 <tr key={id}>
-                    <td>{id}</td>
-                    <td>{plates}</td>
-                    <td>{make}</td>
-                    <td>{model}</td>
+                    <td className={styles.tabletd}>{plates}</td>
+                    <td className={styles.tabletd}>{make}</td>
+                    <td className={styles.tabletd}>{model}</td>
+                    <td className={styles.tabletd}>{year}</td>
+                    <td className={styles.tabletd}>{fuel}</td>
+                    <td className={styles.tabletd}>{price}</td>
+                    <td className={styles.tabletd}>{rented.toString()}</td>
                     <td><button onClick={() => setEditedVehicle(vehicle)}>Edit</button></td>
                     <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
                 </tr>
@@ -57,6 +59,15 @@ export default function Home(props) {
                 <div>
                     <table>
                         <tbody>
+                        <tr>
+                            <td className={styles.tablefirst}>plates</td>
+                            <td className={styles.tablefirst}>make</td>
+                            <td className={styles.tablefirst}>model</td>
+                            <td className={styles.tablefirst}>year</td>
+                            <td className={styles.tablefirst}>fuel</td>
+                            <td className={styles.tablefirst}>price</td>
+                            <td className={styles.tablefirst}>rented</td>
+                        </tr>
                         {renderTableData()}
                         </tbody>
                     </table>

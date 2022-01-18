@@ -66,13 +66,13 @@ export default function EditClientForm({onCancel, data}) {
     const formik = useFormik({
         initialValues: {
             id: selected.id ? selected.id : '',
-            firstName: '',
-            lastName: '',
-            oib: '',
-            address: '',
-            email: '',
-            phoneNumber: '',
-            dateOfBirth: ''
+            firstName: selected.firstName ? selected.firstName : '',
+            lastName: selected.lastName ? selected.lastName : '',
+            oib: selected.oib ? selected.oib : '',
+            address: selected.address ? selected.address : '',
+            email: selected.email ? selected.email : '',
+            phoneNumber: selected.phoneNumber ? selected.phoneNumber : '',
+            dateOfBirth: selected.dateOfBirth ? selected.dateOfBirth : ''
         },
         validate,
         onSubmit: values => {

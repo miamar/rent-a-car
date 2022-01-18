@@ -3,7 +3,6 @@ import Head from "next/head";
 import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditWorkerForm from "./forms/edit-worker";
-import EditOfficeForm from "./forms/edit-office";
 
 export default function Home(props) {
     const [editedWorker, setEditedWorker] = useState(null)
@@ -28,11 +27,11 @@ export default function Home(props) {
             const { id, firstName, lastName, email, address, pay } = worker
             return (
                 <tr key={id}>
-                    <td>{firstName}</td>
-                    <td>{lastName}</td>
-                    <td>{email}</td>
-                    <td>{address}</td>
-                    <td>{pay}</td>
+                    <td className={styles.tabletd}>{firstName}</td>
+                    <td className={styles.tabletd}>{lastName}</td>
+                    <td className={styles.tabletd}>{email}</td>
+                    <td className={styles.tabletd}>{address}</td>
+                    <td className={styles.tabletd}>{pay}</td>
                     <td><button onClick={() => setEditedWorker(worker)}>Edit</button></td>
                     <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
                 </tr>
@@ -58,6 +57,13 @@ export default function Home(props) {
                 <div>
                     <table>
                         <tbody>
+                        <tr >
+                            <td className={styles.tablefirst}>first name</td>
+                            <td className={styles.tablefirst}>last name</td>
+                            <td className={styles.tablefirst}>email</td>
+                            <td className={styles.tablefirst}>address</td>
+                            <td className={styles.tablefirst}>pay</td>
+                        </tr>
                         {renderTableData()}
                         </tbody>
                     </table>
