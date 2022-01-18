@@ -1,8 +1,26 @@
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import {PrismaClient} from "@prisma/client";
+import {useState} from "react";
+import EditVehicleForm from "./forms/edit-vehicle";
+import EditOfficeForm from "./forms/edit-office";
 
 export default function Home(props) {
+    const [editedVehicle, setEditedVehicle] = useState(null)
+    const [vehicles, setVehicles] = useState(props.data)
+
+    const deleteFromDatabase = async (values) => {
+        const res = await fetch('api/delete-vehicle', {
+            method: 'DELETE',
+            body: JSON.stringify(values),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        const data = await res.json();
+
+        setVehicles(vehicles.filter(vehicle => vehicle.id !== data.id));
+    };
 
     function renderTableData() {
 
@@ -14,11 +32,15 @@ export default function Home(props) {
                     <td>{plates}</td>
                     <td>{make}</td>
                     <td>{model}</td>
-                    <td><button>Edit</button></td>
-                    <td><button>Delete</button></td>
+                    <td><button onClick={() => setEditedVehicle(vehicle)}>Edit</button></td>
+                    <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
                 </tr>
             )
         })
+    }
+
+    if (editedVehicle) {
+        return <EditVehicleForm onCancel={() => setEditedVehicle(null)} data={editedVehicle}/>
     }
 
     return (
@@ -41,7 +63,7 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button className={styles.button}><a href="/forms/new-vehicle">Add new</a></button>
+                    <button onClick={() => setEditedVehicle('w')} className={styles.button}>Add new</button>
                     <button className={styles.button}><a href="/home">Home page</a></button>
                 </div>
 

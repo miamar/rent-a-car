@@ -1,13 +1,25 @@
 import styles from "../../styles/Home.module.css";
 import Head from "next/head";
-import React from 'react';
+import React, {useState} from 'react';
 import { useFormik } from 'formik';
 
-export default function SignupForm() {
+export default function EditCollabForm({onCancel, data}) {
+    const [selected, setSelected] = useState(data)
 
-    const saveToDatabase = async (values) => {
-        const res = await fetch('api/new-collab', {
+    const createNewEntry = async (values) => {
+        const res = await fetch('/api/new-collab', {
             method: 'POST',
+            body: JSON.stringify(values),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        const data = await res.json();
+    };
+
+    const saveChanges = async (values) => {
+        const res = await fetch('/api/edit-collab', {
+            method: 'PUT',
             body: JSON.stringify(values),
             headers: {
                 "Content-Type": "application/json"
@@ -41,6 +53,7 @@ export default function SignupForm() {
     // be called when the form is submitted
     const formik = useFormik({
         initialValues: {
+            id: selected.id ? selected.id : '',
             name: '',
             type: '',
             description: '',
@@ -49,7 +62,11 @@ export default function SignupForm() {
         validate,
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
-            saveToDatabase(values);
+            if (selected !== 'w') {
+                saveChanges(values);
+            } else {
+                createNewEntry(values);
+            }
         },
     });
     return (
@@ -119,7 +136,7 @@ export default function SignupForm() {
 
 
                     <button className={styles.button} type="submit">Submit</button>
-                    <button className={styles.button}><a href="/home">Cancel</a></button>
+                    <button className={styles.button} onClick={() => onCancel()}>Cancel</button>
 
                 </form>
             </main>

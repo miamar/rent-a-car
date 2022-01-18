@@ -2,8 +2,18 @@ import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import React from 'react';
 import { useFormik } from 'formik';
+import {PrismaClient} from "@prisma/client";
 
-export default function SignupForm() {
+export default function SignupForm(props) {
+
+    function isAuthValid() {
+
+        if (values.email in props.data.email){
+            return true
+        } else {
+            return false
+        }
+    }
 
     const validate = values => {
         const errors = {};
@@ -86,3 +96,11 @@ export default function SignupForm() {
     );
 };
 
+export async function getServerSideProps() {
+    const prisma = new PrismaClient()
+    const allWorkers = await prisma.auth.findMany()
+    const data = JSON.parse(JSON.stringify(allWorkers))
+    return {
+        props : { data }
+    }
+}

@@ -1,8 +1,26 @@
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import {PrismaClient} from "@prisma/client";
+import {useState} from "react";
+import EditCollabForm from "./forms/edit-collab";
+import EditOfficeForm from "./forms/edit-office";
 
 export default function Home(props) {
+    const [editedCollab, setEditedCollab] = useState(null)
+    const [collabs, setCollabs] = useState(props.data)
+
+    const deleteFromDatabase = async (values) => {
+        const res = await fetch('api/delete-collab', {
+            method: 'DELETE',
+            body: JSON.stringify(values),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        const data = await res.json();
+
+        setCollabs(collabs.filter(collab => collab.id !== data.id));
+    };
 
     function renderTableData() {
 
@@ -15,11 +33,15 @@ export default function Home(props) {
                     <td>{name}</td>
                     <td>{website}</td>
                     <td>{description}</td>
-                    <td><button>Edit</button></td>
-                    <td><button>Delete</button></td>
+                    <td><button onClick={() => setEditedCollab(collab)}>Edit</button></td>
+                    <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
                 </tr>
             )
         })
+    }
+
+    if (editedCollab) {
+        return <EditCollabForm onCancel={() => setEditedCollab(null)} data={editedCollab}/>
     }
 
     return (
@@ -42,7 +64,7 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button className={styles.button}><a href="/forms/new-collab">Add new</a></button>
+                    <button onClick={() => setEditedCollab('w')} className={styles.button}>Add new</button>
                     <button className={styles.button}><a href="/home">Home page</a></button>
                 </div>
 

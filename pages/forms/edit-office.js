@@ -1,13 +1,25 @@
 import styles from "../../styles/Home.module.css";
 import Head from "next/head";
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useFormik } from 'formik';
 
-export default function SignupForm() {
+export default function EditOfficeForm({onCancel, data}) {
+    const [selected, setSelected] = useState(data)
 
-    const saveToDatabase = async (values) => {
-        const res = await fetch('api/new-office', {
+    const createNewEntry = async (values) => {
+        const res = await fetch('/api/new-office', {
             method: 'POST',
+            body: JSON.stringify(values),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        const data = await res.json();
+    };
+
+    const saveChanges = async (values) => {
+        const res = await fetch('/api/edit-office', {
+            method: 'PUT',
             body: JSON.stringify(values),
             headers: {
                 "Content-Type": "application/json"
@@ -37,14 +49,19 @@ export default function SignupForm() {
     // be called when the form is submitted
     const formik = useFormik({
         initialValues: {
-            address: '',
-            phoneNumber: '',
-            workHours: ''
+            id: selected.id ? selected.id : '',
+            address: selected.address ? selected.address : '',
+            phoneNumber: selected.phoneNumber ? selected.phoneNumber : '',
+            workHours: selected.workHours ? selected.workHours : ''
         },
         validate,
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
-            saveToDatabase(values);
+            if (selected !== 'w') {
+                saveChanges(values);
+            } else {
+                createNewEntry(values);
+            }
         },
     });
     return (
@@ -56,7 +73,7 @@ export default function SignupForm() {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">New office</h1>
+                <h1 className="">Podatci poslovnice</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 
@@ -101,11 +118,10 @@ export default function SignupForm() {
 
 
                     <button className={styles.button} type="submit">Submit</button>
-                    <button className={styles.button}><a href="/home">Cancel</a></button>
+                    <button className={styles.button} onClick={() => onCancel()}>Cancel</button>
 
                 </form>
             </main>
         </div>
     );
 };
-

@@ -53,9 +53,9 @@ model Vehicle {
   model        String
   year         Int
   seats        Int
-  transmission String
+  transmission String?
   fuel         String
-  price        Float?
+  price        Float
   rented       Boolean @default(false)
   client       Client @relation(fields: [clientId], references: [id])
   clientId     Int

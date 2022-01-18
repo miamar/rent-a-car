@@ -13,16 +13,16 @@ export default function Home(props) {
 
             <main className={styles.main}>
                 <h1 className={styles.title}>
-                    Welcome to Vertigo!
+                    Dobrodošli!
                 </h1>
 
                 <p className={styles.description}>
-                    Get started by logging in here &rarr;{' '}
+                    Za prijavu u sustav klikni ovdje &rarr;{' '}
                     <code className={styles.code}><a href="/login">Log in</a></code>
                 </p>
 
                 <p className="">
-                    OR: You are currently logged in as <code className={styles.code}>{props.allUsers[1].username}</code>
+                    OR: Trenutno ste prijavljeni u sustav kao <code className={styles.code}>{props.allUsers[1].username}</code>
                 </p>
 
                 <div className={styles.grid}>
@@ -58,6 +58,14 @@ export default function Home(props) {
                     >
                         <h2>Vanjska suradnja &rarr;</h2>
                         <p>Hoteli, aerodromi...</p>
+                    </a>
+
+                    <a
+                        href="/contract"
+                        className={styles.card}
+                    >
+                        <h2>Ugovori &rarr;</h2>
+                        <p>Pregled svih postojećih ugovora i dodavanje novih.</p>
                     </a>
                 </div>
             </main>
