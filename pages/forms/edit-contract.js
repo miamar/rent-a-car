@@ -1,13 +1,13 @@
 import styles from "../../styles/Home.module.css";
 import Head from "next/head";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useFormik } from 'formik';
 
-export default function EditCollabForm({onCancel, data}) {
+export default function EditContractForm({onCancel, data}) {
     const [selected, setSelected] = useState(data)
 
     const createNewEntry = async (values) => {
-        const res = await fetch('/api/new-collab', {
+        const res = await fetch('/api/new-contract', {
             method: 'POST',
             body: JSON.stringify(values),
             headers: {
@@ -18,7 +18,7 @@ export default function EditCollabForm({onCancel, data}) {
     };
 
     const saveChanges = async (values) => {
-        const res = await fetch('/api/edit-collab', {
+        const res = await fetch('/api/edit-contract', {
             method: 'PUT',
             body: JSON.stringify(values),
             headers: {
@@ -31,20 +31,21 @@ export default function EditCollabForm({onCancel, data}) {
     const validate = values => {
         const errors = {};
 
-        if (!values.name) {
-            errors.name = 'Required';
+        if (!values.clientId) {
+            errors.clientId = 'Required';
         }
 
-        if (!values.type) {
-            errors.type = 'Required';
+        if (!values.vehicleId) {
+            errors.vehicleId = 'Required';
         }
 
-        if (!values.description) {
-            errors.description = 'Required';
+        if (!values.workerId) {
+            errors.workerId = 'Required';
         }
 
-        if (!values.website) {
-            errors.website = 'Required';
+        if (values.rentedFrom > values.rentedUntil) {
+            errors.rentedFrom = 'This can\'t be.';
+            console.log(values.rentedFrom)
         }
 
         return errors;
@@ -54,20 +55,19 @@ export default function EditCollabForm({onCancel, data}) {
     const formik = useFormik({
         initialValues: {
             id: selected.id ? selected.id : '',
-            name: selected.name ? selected.name : '',
-            type: selected.type ? selected.type : '',
-            description: selected.description ? selected.description : '',
-            website: selected.website ? selected.website : ''
+            clientId: selected.clientId ? selected.clientId : '',
+            vehicleId: selected.vehicleId ? selected.vehicleId : '',
+            workerId: selected.workerId ? selected.workerId : '',
+            rentedFrom: selected.rentedFrom ? selected.rentedFrom : '',
+            rentedUntil: selected.rentedUntil ? selected.rentedUntil : ''
         },
         validate,
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
                 saveChanges(values);
-                alert("Success editing a collaboration!");
             } else {
                 createNewEntry(values);
-                confirm("Press a button!")
             }
         },
     });
@@ -80,61 +80,72 @@ export default function EditCollabForm({onCancel, data}) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">New collaboration</h1>
+                <h1 className="">Podatci ugovora</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className={styles.forms}>
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="clientId">Client ID</label>
                         <input
                             className={styles.input}
-                            id="name"
-                            name="name"
+                            id="clientId"
+                            name="clientId"
                             type="text"
                             onChange={formik.handleChange}
-                            value={formik.values.name}
+                            value={formik.values.clientId}
                         />
                     </div>
-                    {formik.errors.name ? <div className={styles.error}>{formik.errors.name}</div> : null}
+                    {formik.errors.clientId ? <div className={styles.error}>{formik.errors.clientId}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="type">Type</label>
+                        <label htmlFor="vehicleId">Vehicle ID</label>
                         <input
                             className={styles.input}
-                            id="type"
-                            name="type"
+                            id="vehicleId"
+                            name="vehicleId"
                             type="text"
                             onChange={formik.handleChange}
-                            value={formik.values.type}
+                            value={formik.values.vehicleId}
                         />
                     </div>
-                    {formik.errors.type ? <div className={styles.error}>{formik.errors.type}</div> : null}
+                    {formik.errors.vehicleId ? <div className={styles.error}>{formik.errors.vehicleId}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="description">Description</label>
+                        <label htmlFor="workerId">Worker ID</label>
                         <input
                             className={styles.input}
-                            id="description"
-                            name="description"
+                            id="workerId"
+                            name="workerId"
                             type="text"
                             onChange={formik.handleChange}
-                            value={formik.values.description}
+                            value={formik.values.workerId}
                         />
                     </div>
-                    {formik.errors.description ? <div className={styles.error}>{formik.errors.description}</div> : null}
+                    {formik.errors.workerId ? <div className={styles.error}>{formik.errors.workerId}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="website">Website address</label>
+                        <label htmlFor="rentedFrom">Rented from</label>
                         <input
                             className={styles.input}
-                            id="website"
-                            name="website"
-                            type="text"
+                            id="rentedFrom"
+                            name="rentedFrom"
+                            type="date"
                             onChange={formik.handleChange}
-                            value={formik.values.website}
+                            value={formik.values.rentedFrom}
                         />
                     </div>
-                    {formik.errors.website ? <div className={styles.error}>{formik.errors.website}</div> : null}
+
+                    <div className={styles.forms}>
+                        <label htmlFor="rentedUntil">Rented until</label>
+                        <input
+                            className={styles.input}
+                            id="rentedUntil"
+                            name="rentedUntil"
+                            type="date"
+                            onChange={formik.handleChange}
+                            value={formik.values.rentedUntil}
+                        />
+                    </div>
 
 
                     <button className={styles.button} type="submit">Submit</button>
@@ -145,4 +156,3 @@ export default function EditCollabForm({onCancel, data}) {
         </div>
     );
 };
-

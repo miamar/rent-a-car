@@ -22,8 +22,8 @@ export default function Home(props) {
     };
 
     function renderTableData() {
-        return props.data.map((client, index) => {
-            const { id, firstName, lastName, email, address, phoneNumber } = client
+        return clients.map((client, index) => {
+            const { id, firstName, lastName, email, address, phoneNumber, oib, dateOfBirth } = client
             return (
                 <tr key={id}>
                     <td className={styles.tabletd}>{firstName}</td>
@@ -31,6 +31,8 @@ export default function Home(props) {
                     <td className={styles.tabletd}>{email}</td>
                     <td className={styles.tabletd}>{address}</td>
                     <td className={styles.tabletd}>{phoneNumber}</td>
+                    <td className={styles.tabletd}>{oib}</td>
+                    <td className={styles.tabletd}>{dateOfBirth.substr(0,10)}</td>
                     <td><button onClick={() => setEditedClient(client)}>Edit</button></td>
                     <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
                 </tr>
@@ -61,7 +63,9 @@ export default function Home(props) {
                             <td className={styles.tablefirst}>last name</td>
                             <td className={styles.tablefirst}>email</td>
                             <td className={styles.tablefirst}>address</td>
-                            <td className={styles.tablefirst}>phone nsumber</td>
+                            <td className={styles.tablefirst}>phone number</td>
+                            <td className={styles.tablefirst}>oib</td>
+                            <td className={styles.tablefirst}>date of birth</td>
                         </tr>
                         {renderTableData()}
                         </tbody>

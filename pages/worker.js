@@ -23,7 +23,7 @@ export default function Home(props) {
 
     function renderTableData() {
 
-        return props.data.map((worker, index) => {
+        return workers.map((worker, index) => {
             const { id, firstName, lastName, email, address, pay } = worker
             return (
                 <tr key={id}>

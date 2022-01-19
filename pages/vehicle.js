@@ -23,7 +23,7 @@ export default function Home(props) {
 
     function renderTableData() {
 
-        return props.data.map((vehicle, index) => {
+        return vehicles.map((vehicle, index) => {
             const { id, plates, make, model, year, fuel, price, rented } = vehicle
             return (
                 <tr key={id}>

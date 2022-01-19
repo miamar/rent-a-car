@@ -32,6 +32,7 @@ model Worker {
   position     String
   pay          Int
   role         String
+  contract     Contract[]
 }
 
 model Client {
@@ -43,7 +44,7 @@ model Client {
   address      String
   dateOfBirth  DateTime
   phoneNumber  String
-  vehicle      Vehicle[]
+  contract     Contract[]
 }
 
 model Vehicle {
@@ -57,8 +58,7 @@ model Vehicle {
   fuel         String
   price        Float
   rented       Boolean @default(false)
-  client       Client @relation(fields: [clientId], references: [id])
-  clientId     Int
+  contract     Contract[]
 }
 
 model Office {
@@ -74,4 +74,16 @@ model Collaborator {
   type         String
   description  String
   website      String
+}
+
+model Contract {
+  id           Int @default(autoincrement()) @id
+  client       Client @relation(fields: [clientId], references: [id])
+  clientId     Int
+  vehicle      Vehicle @relation(fields: [vehicleId], references: [id])
+  vehicleId    Int
+  worker       Worker @relation(fields: [workerId], references: [id])
+  workerId     Int
+  rentedFrom   DateTime
+  rentedUntil  DateTime
 }

@@ -72,7 +72,7 @@ export default function EditClientForm({onCancel, data}) {
             address: selected.address ? selected.address : '',
             email: selected.email ? selected.email : '',
             phoneNumber: selected.phoneNumber ? selected.phoneNumber : '',
-            dateOfBirth: selected.dateOfBirth ? selected.dateOfBirth : ''
+            dateOfBirth: selected.dateOfBirth ? selected.dateOfBirth.substr(0,10) : ''
         },
         validate,
         onSubmit: values => {

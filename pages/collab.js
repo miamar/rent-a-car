@@ -3,7 +3,6 @@ import Head from "next/head";
 import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditCollabForm from "./forms/edit-collab";
-import EditOfficeForm from "./forms/edit-office";
 
 export default function Home(props) {
     const [editedCollab, setEditedCollab] = useState(null)
@@ -24,7 +23,7 @@ export default function Home(props) {
 
     function renderTableData() {
 
-        return props.data.map((collab, index) => {
+        return collabs.map((collab, index) => {
             const { id, type, name, website, description } = collab
             return (
                 <tr key={id}>

@@ -1,12 +1,14 @@
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import {PrismaClient} from "@prisma/client";
-import { useFormik } from 'formik';
 import {useState} from "react";
+import EditContractForm from "./forms/edit-contract";
 
 export default function Home(props) {
-    // change office to contract
-    const [offices, setOffices] = useState(props.data)
+    console.log(props.data)
+
+    const [editedContract, setEditedContract] = useState(null)
+    const [contracts, setContracts] = useState(props.data)
 
     const deleteFromDatabase = async (values) => {
         const res = await fetch('api/delete-contract', {
@@ -18,38 +20,31 @@ export default function Home(props) {
         });
         const data = await res.json();
 
-        setOffices(offices.filter(office => office.id !== data.id));
-    };
-
-    const editDatabase = async (values) => {
-        const res = await fetch('api/edit-contract', {
-            method: 'PUT',
-            body: JSON.stringify(values),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        const data = await res.json();
-
-        setOffices(offices.filter(office => office.id !== data.id));
+        setContracts(contracts.filter(contract => contract.id !== data.id));
     };
 
     function renderTableData() {
 
-        return offices.map((contract, index) => {
-            const { id, address, phoneNumber, workHours } = contract
+        return contracts.map((contract) => {
+            const { id, rentedFrom, rentedUntil, client, vehicle, worker } = contract
             return (
                 <tr key={id}>
-                    <td>{id}</td>
-                    <td>{address}</td>
-                    <td>{phoneNumber}</td>
-                    <td>{workHours}</td>
-                    <td><button onClick={() => editDatabase({id: id, number: 1})}>Edit</button></td>
+                    <td className={styles.tabletd}>{client.firstName} {client.lastName}</td>
+                    <td className={styles.tabletd}>{vehicle.make} {vehicle.model}</td>
+                    <td className={styles.tabletd}>{worker.firstName} {worker.lastName}</td>
+                    <td className={styles.tabletd}>{rentedFrom.substr(0,10)}</td>
+                    <td className={styles.tabletd}>{rentedUntil.substr(0,10)}</td>
+                    <td><button onClick={() => setEditedContract(contract)}>Edit</button></td>
                     <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
                 </tr>
             )
         })
     }
+
+    if (editedContract) {
+        return <EditContractForm onCancel={() => setEditedContract(null)} data={editedContract}/>
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -59,31 +54,47 @@ export default function Home(props) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Ugovori!</h1>
+                <h1 className="">Ugovori</h1>
 
                 <div>
                     <table>
                         <tbody>
+                        <tr>
+                            <td className={styles.tablefirst}>klijent ime</td>
+                            <td className={styles.tablefirst}>vozilo marka</td>
+                            <td className={styles.tablefirst}>zaposlenik ime</td>
+                            <td className={styles.tablefirst}>od</td>
+                            <td className={styles.tablefirst}>do</td>
+                        </tr>
                         {renderTableData()}
                         </tbody>
                     </table>
                 </div>
 
                 <div>
-                    <button className={styles.button}><a href="/forms/new-contract">Add new</a></button>
+                    <button onClick={() => setEditedContract('w')} className={styles.button}>Add new</button>
                     <button className={styles.button}><a href="/home">Home page</a></button>
                 </div>
 
 
             </main>
-
         </div>
     )
 }
 
 export async function getServerSideProps() {
     const prisma = new PrismaClient()
-    const allOffices = await prisma.contract.findMany()
+
+    const allOffices = await prisma.contract.findMany({
+        where: {
+
+        },
+        include: {
+            client: true,
+            vehicle: true,
+            worker: true
+        },
+    })
     const data = JSON.parse(JSON.stringify(allOffices))
     return {
         props : { data }

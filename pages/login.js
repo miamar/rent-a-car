@@ -88,7 +88,7 @@ export default function SignupForm(props) {
 
                     <p><a href={"#"}>Forgot password?</a></p>
 
-                    <p><a href="/forms/new-worker">Don't have an account? Register.</a></p>
+                    <p><a href="/worker">Don't have an account? Register.</a></p>
 
                 </form>
             </main>

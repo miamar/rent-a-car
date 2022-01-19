@@ -24,8 +24,7 @@ export default async function handler(req, res) {
             transmission: transmission,
             fuel: fuel,
             rented: false,
-            price: price ? parseFloat(price) : 0,
-            clientId: 1
+            price: price ? parseFloat(price) : 0
         },
     })
 }

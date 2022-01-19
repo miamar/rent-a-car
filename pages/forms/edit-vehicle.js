@@ -58,6 +58,10 @@ export default function EditVehicleForm({onCancel, data}) {
             make: selected.make ? selected.make : '',
             model: selected.model ? selected.model : '',
             year: selected.year ? selected.year : '',
+            seats: selected.seats ? selected.seats : '',
+            transition: selected.transition ? selected.transition : '',
+            fuel: selected.fuel ? selected.fuel : '',
+            price: selected.price ? selected.price : '',
         },
         validate,
         onSubmit: values => {
