@@ -22,7 +22,11 @@ export default function Home(props) {
                 </p>
 
                 <p className="">
+<<<<<<< HEAD
 
+=======
+                   
+>>>>>>> dba473b41b109819868ed16b2f9a48994f331b5c
                 </p>
 
                 <div className={styles.grid}>
@@ -60,13 +64,7 @@ export default function Home(props) {
                         <p>Hoteli, aerodromi...</p>
                     </a>
 
-                    <a
-                        href="/contract"
-                        className={styles.card}
-                    >
-                        <h2>Ugovori &rarr;</h2>
-                        <p>Pregled svih postojećih ugovora i dodavanje novih.</p>
-                    </a>
+                    
                 </div>
             </main>
 
