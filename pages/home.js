@@ -60,13 +60,7 @@ export default function Home(props) {
                         <p>Hoteli, aerodromi...</p>
                     </a>
 
-                    <a
-                        href="/contract"
-                        className={styles.card}
-                    >
-                        <h2>Ugovori &rarr;</h2>
-                        <p>Pregled svih postojećih ugovora i dodavanje novih.</p>
-                    </a>
+                    
                 </div>
             </main>
 
