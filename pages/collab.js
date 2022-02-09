@@ -31,8 +31,8 @@ export default function Home(props) {
                     <td className={styles.tabletd}>{name}</td>
                     <td className={styles.tabletd}><a href={website} target="_blank">{website}</a></td>
                     <td className={styles.tabletd}>{description}</td>
-                    <td><button onClick={() => setEditedCollab(collab)}>Edit</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
+                    <td><button onClick={() => setEditedCollab(collab)}>Uredi</button></td>
+                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -57,10 +57,10 @@ export default function Home(props) {
                     <table>
                         <tbody>
                         <tr >
-                            <td className={styles.tablefirst}>type</td>
-                            <td className={styles.tablefirst}>name</td>
-                            <td className={styles.tablefirst}>website</td>
-                            <td className={styles.tablefirst}>description</td>
+                            <td className={styles.tablefirst}>vrsta</td>
+                            <td className={styles.tablefirst}>naziv</td>
+                            <td className={styles.tablefirst}>web stranica</td>
+                            <td className={styles.tablefirst}>opis</td>
                         </tr>
                         {renderTableData()}
                         </tbody>
@@ -68,8 +68,8 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedCollab('w')} className={styles.button}>Add new</button>
-                    <button className={styles.button}><a href="/home">Home page</a></button>
+                    <button onClick={() => setEditedCollab('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}><a href="/home">Početna</a></button>
                 </div>
 
 

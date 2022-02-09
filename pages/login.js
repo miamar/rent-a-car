@@ -58,7 +58,7 @@ export default function SignupForm(props) {
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className={styles.forms}>
-                        <label htmlFor="email">Email Address</label>
+                        <label htmlFor="email">Email</label>
                         <input
                             className={styles.input}
                             id="email"
@@ -71,7 +71,7 @@ export default function SignupForm(props) {
                     </div>
 
                     <div className={styles.forms}>
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Lozinka</label>
                         <input
                             className={styles.input}
                             id="password"
@@ -83,12 +83,12 @@ export default function SignupForm(props) {
                         {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                     </div>
 
-                    <button className={styles.button} type="submit">Submit</button>
-                    <button className={styles.button}><a href="/home">Cancel</a></button>
+                    <button className={styles.button} type="submit">OK</button>
+                    <button className={styles.button}><a href="/home">Odustani</a></button>
 
-                    <p><a href={"#"}>Forgot password?</a></p>
+                    <p><a href={"#"}>Zaboravili ste lozinku?</a></p>
 
-                    <p><a href="/worker">Don't have an account? Register.</a></p>
+                    <p><a href="/worker">Nemate račun? Registrirajte se.</a></p>
 
                 </form>
             </main>

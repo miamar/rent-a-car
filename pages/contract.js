@@ -34,8 +34,8 @@ export default function Home(props) {
                     <td className={styles.tabletd}>{worker.firstName} {worker.lastName}</td>
                     <td className={styles.tabletd}>{rentedFrom.substr(0,10)}</td>
                     <td className={styles.tabletd}>{rentedUntil.substr(0,10)}</td>
-                    <td><button onClick={() => setEditedContract(contract)}>Edit</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
+                    <td><button onClick={() => setEditedContract(contract)}>Uredi</button></td>
+                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -72,8 +72,8 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedContract('w')} className={styles.button}>Add new</button>
-                    <button className={styles.button}><a href="/home">Home page</a></button>
+                    <button onClick={() => setEditedContract('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}><a href="/home">Početna</a></button>
                 </div>
 
 

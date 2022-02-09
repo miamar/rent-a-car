@@ -24,16 +24,19 @@ export default function Home(props) {
     function renderTableData() {
 
         return workers.map((worker, index) => {
-            const { id, firstName, lastName, email, address, pay } = worker
+            const { id, firstName, lastName, email, oib, dateOfBirth, address, phoneNumber, pay } = worker
             return (
                 <tr key={id}>
                     <td className={styles.tabletd}>{firstName}</td>
                     <td className={styles.tabletd}>{lastName}</td>
                     <td className={styles.tabletd}>{email}</td>
+                    <td className={styles.tabletd}>{oib}</td>
                     <td className={styles.tabletd}>{address}</td>
+                    <td className={styles.tabletd}>{dateOfBirth.substr(0,10)}</td>
+                    <td className={styles.tabletd}>{phoneNumber}</td>
                     <td className={styles.tabletd}>{pay}</td>
-                    <td><button onClick={() => setEditedWorker(worker)}>Edit</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
+                    <td><button onClick={() => setEditedWorker(worker)}>Uredi</button></td>
+                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -58,11 +61,14 @@ export default function Home(props) {
                     <table>
                         <tbody>
                         <tr >
-                            <td className={styles.tablefirst}>first name</td>
-                            <td className={styles.tablefirst}>last name</td>
+                            <td className={styles.tablefirst}>ime</td>
+                            <td className={styles.tablefirst}>prezime</td>
                             <td className={styles.tablefirst}>email</td>
-                            <td className={styles.tablefirst}>address</td>
-                            <td className={styles.tablefirst}>pay</td>
+                            <td className={styles.tablefirst}>oib</td>
+                            <td className={styles.tablefirst}>adresa</td>
+                            <td className={styles.tablefirst}>datum rođenja</td>
+                            <td className={styles.tablefirst}>broj mobitela</td>
+                            <td className={styles.tablefirst}>plaća</td>
                         </tr>
                         {renderTableData()}
                         </tbody>
@@ -70,8 +76,8 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedWorker('w')} className={styles.button}>Add new</button>
-                    <button className={styles.button}><a href="/home">Home page</a></button>
+                    <button onClick={() => setEditedWorker('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}><a href="/home">Početna</a></button>
                 </div>
 
 

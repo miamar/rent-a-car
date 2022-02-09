@@ -30,8 +30,8 @@ export default function Home(props) {
                     <td className={styles.tabletd}>{address}</td>
                     <td className={styles.tabletd}>{phoneNumber}</td>
                     <td className={styles.tabletd}>{workHours}</td>
-                    <td><button onClick={() => setEditedOffice(office)}>Edit</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
+                    <td><button onClick={() => setEditedOffice(office)}>Uredi</button></td>
+                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -56,9 +56,9 @@ export default function Home(props) {
                     <table>
                         <tbody>
                         <tr>
-                            <td className={styles.tablefirst}>address</td>
-                            <td className={styles.tablefirst}>phone Number</td>
-                            <td className={styles.tablefirst}>working Hours</td>
+                            <td className={styles.tablefirst}>adresa</td>
+                            <td className={styles.tablefirst}>broj telefona</td>
+                            <td className={styles.tablefirst}>radno vrijeme</td>
                         </tr>
                         {renderTableData()}
                         </tbody>
@@ -66,8 +66,8 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedOffice('w')} className={styles.button}>Add new</button>
-                    <button className={styles.button}><a href="/home">Home page</a></button>
+                    <button onClick={() => setEditedOffice('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}><a href="/home">Početna</a></button>
                 </div>
 
 

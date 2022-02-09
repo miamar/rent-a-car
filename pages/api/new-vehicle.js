@@ -9,6 +9,7 @@ export default async function handler(req, res) {
         model,
         year,
         seats,
+        consumption,
         transmission,
         fuel,
         price
@@ -21,6 +22,7 @@ export default async function handler(req, res) {
             model: model,
             year: year ? parseFloat(year) : 0,
             seats: seats ? parseFloat(seats) : 0,
+            consumption: consumption ? parseFloat(consumption) : 0,
             transmission: transmission,
             fuel: fuel,
             rented: false,

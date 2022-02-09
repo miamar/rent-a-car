@@ -59,8 +59,14 @@ export default function EditOfficeForm({onCancel, data}) {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
                 saveChanges(values);
+                if(confirm("Uspješno ste uredili zapis o poslovnici!")){
+                    window.location.reload();
+                }
             } else {
                 createNewEntry(values);
+                if(confirm("Uspješno ste dodali novu poslovnicu!")){
+                    window.location.reload();
+                }
             }
         },
     });
@@ -78,7 +84,7 @@ export default function EditOfficeForm({onCancel, data}) {
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className={styles.forms}>
-                        <label htmlFor="address">Address</label>
+                        <label htmlFor="address">Adresa</label>
                         <input
                             className={styles.input}
                             id="address"
@@ -91,7 +97,7 @@ export default function EditOfficeForm({onCancel, data}) {
                     {formik.errors.address ? <div className={styles.error}>{formik.errors.address}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="phoneNumber">Phone number</label>
+                        <label htmlFor="phoneNumber">Broj telefona</label>
                         <input
                             className={styles.input}
                             id="phoneNumber"
@@ -104,7 +110,7 @@ export default function EditOfficeForm({onCancel, data}) {
                     {formik.errors.phoneNumber ? <div className={styles.error}>{formik.errors.phoneNumber}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="workHours">Working hours</label>
+                        <label htmlFor="workHours">Radno vrijeme</label>
                         <input
                             className={styles.input}
                             id="workHours"
@@ -117,8 +123,8 @@ export default function EditOfficeForm({onCancel, data}) {
                     {formik.errors.workHours ? <div className={styles.error}>{formik.errors.workHours}</div> : null}
 
 
-                    <button className={styles.button} type="submit">Submit</button>
-                    <button className={styles.button} onClick={() => onCancel()}>Cancel</button>
+                    <button className={styles.button} type="submit">OK</button>
+                    <button className={styles.button} onClick={() => onCancel()}>Odustani</button>
 
                 </form>
             </main>

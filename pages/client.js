@@ -33,8 +33,8 @@ export default function Home(props) {
                     <td className={styles.tabletd}>{phoneNumber}</td>
                     <td className={styles.tabletd}>{oib}</td>
                     <td className={styles.tabletd}>{dateOfBirth.substr(0,10)}</td>
-                    <td><button onClick={() => setEditedClient(client)}>Edit</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
+                    <td><button onClick={() => setEditedClient(client)}>Uredi</button></td>
+                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -59,13 +59,13 @@ export default function Home(props) {
                     <table>
                         <tbody>
                         <tr >
-                            <td className={styles.tablefirst}>first name</td>
-                            <td className={styles.tablefirst}>last name</td>
+                            <td className={styles.tablefirst}>ime</td>
+                            <td className={styles.tablefirst}>prezime</td>
                             <td className={styles.tablefirst}>email</td>
-                            <td className={styles.tablefirst}>address</td>
-                            <td className={styles.tablefirst}>phone number</td>
+                            <td className={styles.tablefirst}>adresa</td>
+                            <td className={styles.tablefirst}>broj mobitela</td>
                             <td className={styles.tablefirst}>oib</td>
-                            <td className={styles.tablefirst}>date of birth</td>
+                            <td className={styles.tablefirst}>datum rođenja</td>
                         </tr>
                         {renderTableData()}
                         </tbody>
@@ -73,8 +73,8 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedClient('w')} className={styles.button}>Add new</button>
-                    <button className={styles.button}><a href="/home">Home page</a></button>
+                    <button onClick={() => setEditedClient('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}><a href="/home">Početna</a></button>
                 </div>
 
 

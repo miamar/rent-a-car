@@ -64,10 +64,14 @@ export default function EditCollabForm({onCancel, data}) {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
                 saveChanges(values);
-                alert("Success editing a collaboration!");
+                if(confirm("Uspješno ste uredili zapis o vanjskoj suradnji!")){
+                    window.location.reload();
+                }
             } else {
                 createNewEntry(values);
-                confirm("Press a button!")
+                if(confirm("Uspješno ste dodali novu vanjsku suradnju!")){
+                    window.location.reload();
+                }
             }
         },
     });
@@ -85,7 +89,7 @@ export default function EditCollabForm({onCancel, data}) {
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className={styles.forms}>
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name">Naziv</label>
                         <input
                             className={styles.input}
                             id="name"
@@ -98,7 +102,7 @@ export default function EditCollabForm({onCancel, data}) {
                     {formik.errors.name ? <div className={styles.error}>{formik.errors.name}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="type">Type</label>
+                        <label htmlFor="type">Vrsta</label>
                         <input
                             className={styles.input}
                             id="type"
@@ -111,7 +115,7 @@ export default function EditCollabForm({onCancel, data}) {
                     {formik.errors.type ? <div className={styles.error}>{formik.errors.type}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="description">Description</label>
+                        <label htmlFor="description">Opis</label>
                         <input
                             className={styles.input}
                             id="description"
@@ -124,7 +128,7 @@ export default function EditCollabForm({onCancel, data}) {
                     {formik.errors.description ? <div className={styles.error}>{formik.errors.description}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="website">Website address</label>
+                        <label htmlFor="website">Web stranica</label>
                         <input
                             className={styles.input}
                             id="website"

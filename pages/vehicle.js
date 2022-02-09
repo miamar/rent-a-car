@@ -24,18 +24,21 @@ export default function Home(props) {
     function renderTableData() {
 
         return vehicles.map((vehicle, index) => {
-            const { id, plates, make, model, year, fuel, price, rented } = vehicle
+            const { id, plates, make, model, year, seats, consumption, transmission, fuel, price, rented } = vehicle
             return (
                 <tr key={id}>
                     <td className={styles.tabletd}>{plates}</td>
                     <td className={styles.tabletd}>{make}</td>
                     <td className={styles.tabletd}>{model}</td>
                     <td className={styles.tabletd}>{year}</td>
+                    <td className={styles.tabletd}>{seats}</td>
+                    <td className={styles.tabletd}>{consumption} L/km</td>
+                    <td className={styles.tabletd}>{transmission}</td>
                     <td className={styles.tabletd}>{fuel}</td>
-                    <td className={styles.tabletd}>{price}</td>
+                    <td className={styles.tabletd}>{price} kn</td>
                     <td className={styles.tabletd}>{rented.toString()}</td>
-                    <td><button onClick={() => setEditedVehicle(vehicle)}>Edit</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Delete</button></td>
+                    <td><button onClick={() => setEditedVehicle(vehicle)}>Uredi</button></td>
+                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -60,13 +63,16 @@ export default function Home(props) {
                     <table>
                         <tbody>
                         <tr>
-                            <td className={styles.tablefirst}>plates</td>
-                            <td className={styles.tablefirst}>make</td>
+                            <td className={styles.tablefirst}>registracija</td>
+                            <td className={styles.tablefirst}>marka</td>
                             <td className={styles.tablefirst}>model</td>
-                            <td className={styles.tablefirst}>year</td>
-                            <td className={styles.tablefirst}>fuel</td>
-                            <td className={styles.tablefirst}>price</td>
-                            <td className={styles.tablefirst}>rented</td>
+                            <td className={styles.tablefirst}>godina</td>
+                            <td className={styles.tablefirst}>br. sjedala</td>
+                            <td className={styles.tablefirst}>potrošnja</td>
+                            <td className={styles.tablefirst}>mjenjač</td>
+                            <td className={styles.tablefirst}>gorivo</td>
+                            <td className={styles.tablefirst}>cijena</td>
+                            <td className={styles.tablefirst}>iznajmljen</td>
                         </tr>
                         {renderTableData()}
                         </tbody>
@@ -74,8 +80,8 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedVehicle('w')} className={styles.button}>Add new</button>
-                    <button className={styles.button}><a href="/home">Home page</a></button>
+                    <button onClick={() => setEditedVehicle('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}><a href="/home">Početna</a></button>
                 </div>
 
 

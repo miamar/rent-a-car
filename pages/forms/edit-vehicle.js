@@ -47,6 +47,26 @@ export default function EditVehicleForm({onCancel, data}) {
             errors.year = 'Required';
         }
 
+        if (!values.seats) {
+            errors.seats = 'Required';
+        }
+
+        if (!values.consumption) {
+            errors.consumption = 'Required';
+        }
+
+        if (!values.transmission) {
+            errors.transmission = 'Required';
+        }
+
+        if (!values.fuel) {
+            errors.fuel = 'Required';
+        }
+
+        if (!values.price) {
+            errors.price = 'Required';
+        }
+
         return errors;
     };
     // Pass the useFormik() hook initial form values and a submit function that will
@@ -59,7 +79,8 @@ export default function EditVehicleForm({onCancel, data}) {
             model: selected.model ? selected.model : '',
             year: selected.year ? selected.year : '',
             seats: selected.seats ? selected.seats : '',
-            transition: selected.transition ? selected.transition : '',
+            consumption: selected.consumption ? selected.consumption : '',
+            transmission: selected.transmission ? selected.transmission : '',
             fuel: selected.fuel ? selected.fuel : '',
             price: selected.price ? selected.price : '',
         },
@@ -68,8 +89,14 @@ export default function EditVehicleForm({onCancel, data}) {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
                 saveChanges(values);
+                if(confirm("Uspješno ste uredili zapis o vozilu!")){
+                    window.location.reload();
+                }
             } else {
                 createNewEntry(values);
+                if(confirm("Uspješno ste dodali novo vozilo!")){
+                    window.location.reload();
+                }
             }
         },
     });
@@ -87,7 +114,7 @@ export default function EditVehicleForm({onCancel, data}) {
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className={styles.forms}>
-                        <label htmlFor="plates">Plates</label>
+                        <label htmlFor="plates">Registracija</label>
                         <input
                             className={styles.input}
                             id="plates"
@@ -100,7 +127,7 @@ export default function EditVehicleForm({onCancel, data}) {
                     {formik.errors.plates ? <div className={styles.error}>{formik.errors.plates}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="make">Make</label>
+                        <label htmlFor="make">Marka</label>
                         <input
                             className={styles.input}
                             id="make"
@@ -126,7 +153,7 @@ export default function EditVehicleForm({onCancel, data}) {
                     {formik.errors.model ? <div className={styles.error}>{formik.errors.model}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="year">Year</label>
+                        <label htmlFor="year">Godina proizvodnje</label>
                         <input
                             className={styles.input}
                             id="year"
@@ -139,7 +166,7 @@ export default function EditVehicleForm({onCancel, data}) {
                     {formik.errors.year ? <div className={styles.error}>{formik.errors.year}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="seats">Number of seats</label>
+                        <label htmlFor="seats">Broj sjedala</label>
                         <input
                             className={styles.input}
                             id="seats"
@@ -152,7 +179,20 @@ export default function EditVehicleForm({onCancel, data}) {
                     {formik.errors.seats ? <div className={styles.error}>{formik.errors.seats}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="transmission">Transmission</label>
+                        <label htmlFor="consumption">Potrošnja goriva</label>
+                        <input
+                            className={styles.input}
+                            id="consumption"
+                            name="consumption"
+                            type="text"
+                            onChange={formik.handleChange}
+                            value={formik.values.consumption}
+                        />
+                    </div>
+                    {formik.errors.consumption ? <div className={styles.error}>{formik.errors.consumption}</div> : null}
+
+                    <div className={styles.forms}>
+                        <label htmlFor="transmission">Vrsta mjenjača</label>
                         <input
                             className={styles.input}
                             id="transmission"
@@ -165,7 +205,7 @@ export default function EditVehicleForm({onCancel, data}) {
                     {formik.errors.transmission ? <div className={styles.error}>{formik.errors.transmission}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="fuel">Fuel</label>
+                        <label htmlFor="fuel">Gorivo</label>
                         <input
                             className={styles.input}
                             id="fuel"
@@ -178,7 +218,7 @@ export default function EditVehicleForm({onCancel, data}) {
                     {formik.errors.fuel ? <div className={styles.error}>{formik.errors.fuel}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="price">Price per day</label>
+                        <label htmlFor="price">Cijena po danu</label>
                         <input
                             className={styles.input}
                             id="price"
@@ -188,9 +228,10 @@ export default function EditVehicleForm({onCancel, data}) {
                             value={formik.values.price}
                         />
                     </div>
+                    {formik.errors.price ? <div className={styles.error}>{formik.errors.price}</div> : null}
 
-                    <button className={styles.button} type="submit">Submit</button>
-                    <button className={styles.button} onClick={() => onCancel()}>Cancel</button>
+                    <button className={styles.button} type="submit">OK</button>
+                    <button className={styles.button} onClick={() => onCancel()}>Odustani</button>
 
                 </form>
             </main>

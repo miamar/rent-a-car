@@ -53,6 +53,32 @@ export default function EditWorkerForm({onCancel, data}) {
             errors.password = 'Must be 8 characters or more';
         }
 
+        if (!values.oib) {
+            errors.oib = 'Required';
+        } else if (values.oib.length !== 11) {
+            errors.oib = 'OIB must have 11 numbers'
+        }
+
+        if (!values.firstName) {
+            errors.firstName = 'Required';
+        }
+
+        if (!values.lastName) {
+            errors.lastName = 'Required';
+        }
+
+        if (!values.address) {
+            errors.address = 'Required';
+        }
+
+        if (!values.phoneNumber) {
+            errors.phoneNumber = 'Required';
+        }
+
+        if (!values.dateOfBirth) {
+            errors.dateOfBirth = 'Required';
+        }
+
         return errors;
     };
     // Pass the useFormik() hook initial form values and a submit function that will
@@ -69,7 +95,7 @@ export default function EditWorkerForm({onCancel, data}) {
             oib: selected.oib ? selected.oib : '',
             address: selected.address ? selected.address : '',
             phoneNumber: selected.phoneNumber ? selected.phoneNumber : '',
-            dateOfBirth: selected.dateOfBirth ? selected.dateOfBirth : '',
+            dateOfBirth: selected.dateOfBirth ? selected.dateOfBirth.substr(0,10) : '',
             pay: selected.pay ? selected.pay : ''
         },
         validate,
@@ -77,8 +103,14 @@ export default function EditWorkerForm({onCancel, data}) {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
                 saveChanges(values);
+                if(confirm("Uspješno ste uredili zapis o zaposleniku!")){
+                    window.location.reload();
+                }
             } else {
                 createNewEntry(values);
+                if(confirm("Uspješno ste dodali novog zaposlenika!")){
+                    window.location.reload();
+                }
             }
         },
     });
@@ -96,7 +128,7 @@ export default function EditWorkerForm({onCancel, data}) {
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className={styles.forms}>
-                        <label htmlFor="role">Role</label>
+                        <label htmlFor="role">Uloga</label>
                         <select
                             id="role"
                             name="role"
@@ -111,7 +143,7 @@ export default function EditWorkerForm({onCancel, data}) {
                     {formik.errors.role ? <div className={styles.error}>{formik.errors.role}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="username">Korisničko ime</label>
                         <input
                             className={styles.input}
                             id="username"
@@ -124,7 +156,7 @@ export default function EditWorkerForm({onCancel, data}) {
                     {formik.errors.username ? <div className={styles.error}>{formik.errors.username}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="email">Email Address</label>
+                        <label htmlFor="email">Email</label>
                         <input
                             className={styles.input}
                             id="email"
@@ -137,7 +169,7 @@ export default function EditWorkerForm({onCancel, data}) {
                     {formik.errors.email ? <div className={styles.error}>{formik.errors.email}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Lozinka</label>
                         <input
                             className={styles.input}
                             id="password"
@@ -150,7 +182,7 @@ export default function EditWorkerForm({onCancel, data}) {
                     {formik.errors.password ? <div className={styles.error}>{formik.errors.password}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="firstName">First Name</label>
+                        <label htmlFor="firstName">Ime</label>
                         <input
                             className={styles.input}
                             id="firstName"
@@ -160,9 +192,10 @@ export default function EditWorkerForm({onCancel, data}) {
                             value={formik.values.firstName}
                         />
                     </div>
+                    {formik.errors.firstName ? <div className={styles.error}>{formik.errors.firstName}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="lastName">Last Name</label>
+                        <label htmlFor="lastName">Prezime</label>
                         <input
                             className={styles.input}
                             id="lastName"
@@ -172,6 +205,7 @@ export default function EditWorkerForm({onCancel, data}) {
                             value={formik.values.lastName}
                         />
                     </div>
+                    {formik.errors.lastName ? <div className={styles.error}>{formik.errors.lastName}</div> : null}
 
                     <div className={styles.forms}>
                         <label htmlFor="oib">OIB</label>
@@ -184,9 +218,10 @@ export default function EditWorkerForm({onCancel, data}) {
                             value={formik.values.oib}
                         />
                     </div>
+                    {formik.errors.oib ? <div className={styles.error}>{formik.errors.oib}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="address">Address</label>
+                        <label htmlFor="address">Adresa</label>
                         <input
                             className={styles.input}
                             id="address"
@@ -196,9 +231,10 @@ export default function EditWorkerForm({onCancel, data}) {
                             value={formik.values.address}
                         />
                     </div>
+                    {formik.errors.address ? <div className={styles.error}>{formik.errors.address}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="phoneNumber">Phone Number</label>
+                        <label htmlFor="phoneNumber">Broj mobitela</label>
                         <input
                             className={styles.input}
                             id="phoneNumber"
@@ -208,9 +244,10 @@ export default function EditWorkerForm({onCancel, data}) {
                             value={formik.values.phoneNumber}
                         />
                     </div>
+                    {formik.errors.phoneNumber ? <div className={styles.error}>{formik.errors.phoneNumber}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="dateOfBirth">Date of birth</label>
+                        <label htmlFor="dateOfBirth">Datum rođenja</label>
                         <input
                             className={styles.input}
                             id="dateOfBirth"
@@ -220,9 +257,10 @@ export default function EditWorkerForm({onCancel, data}) {
                             value={formik.values.dateOfBirth}
                         />
                     </div>
+                    {formik.errors.dateOfBirth ? <div className={styles.error}>{formik.errors.dateOfBirth}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="pay">Pay</label>
+                        <label htmlFor="pay">Plaća</label>
                         <input
                             className={styles.input}
                             id="pay"
@@ -233,8 +271,8 @@ export default function EditWorkerForm({onCancel, data}) {
                         />
                     </div>
 
-                    <button className={styles.button} type="submit">Submit</button>
-                    <button className={styles.button} onClick={() => onCancel()}>Cancel</button>
+                    <button className={styles.button} type="submit">OK</button>
+                    <button className={styles.button} onClick={() => onCancel()}>Odustani</button>
 
                 </form>
             </main>

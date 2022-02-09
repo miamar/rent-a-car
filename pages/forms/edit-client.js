@@ -41,6 +41,8 @@ export default function EditClientForm({onCancel, data}) {
 
         if (!values.oib) {
             errors.oib = 'Required';
+        } else if (values.oib.length !== 11) {
+            errors.oib = 'OIB must have 11 numbers'
         }
 
         if (!values.address) {
@@ -49,6 +51,8 @@ export default function EditClientForm({onCancel, data}) {
 
         if (!values.email) {
             errors.email = 'Required';
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+            errors.email = 'Invalid email address';
         }
 
         if (!values.phoneNumber) {
@@ -79,8 +83,14 @@ export default function EditClientForm({onCancel, data}) {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
                 saveChanges(values);
+                if(confirm("Uspješno ste uredili zapis o klijentu!")){
+                    window.location.reload();
+                }
             } else {
                 createNewEntry(values);
+                if(confirm("Uspješno ste dodali novog klijenta!")){
+                    window.location.reload();
+                }
             }
         },
     });
@@ -98,7 +108,7 @@ export default function EditClientForm({onCancel, data}) {
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className={styles.forms}>
-                        <label htmlFor="firstName">First Name</label>
+                        <label htmlFor="firstName">Ime</label>
                         <input
                             className={styles.input}
                             id="firstName"
@@ -111,7 +121,7 @@ export default function EditClientForm({onCancel, data}) {
                     {formik.errors.firstName ? <div className={styles.error}>{formik.errors.firstName}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="lastName">Last Name</label>
+                        <label htmlFor="lastName">Prezime</label>
                         <input
                             className={styles.input}
                             id="lastName"
@@ -137,7 +147,7 @@ export default function EditClientForm({onCancel, data}) {
                     {formik.errors.oib ? <div className={styles.error}>{formik.errors.oib}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="address">Address</label>
+                        <label htmlFor="address">Adresa</label>
                         <input
                             className={styles.input}
                             id="address"
@@ -150,7 +160,7 @@ export default function EditClientForm({onCancel, data}) {
                     {formik.errors.address ? <div className={styles.error}>{formik.errors.address}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="email">Email Address</label>
+                        <label htmlFor="email">Email</label>
                         <input
                             className={styles.input}
                             id="email"
@@ -163,7 +173,7 @@ export default function EditClientForm({onCancel, data}) {
                     {formik.errors.email ? <div className={styles.error}>{formik.errors.email}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="phoneNumber">Phone Number</label>
+                        <label htmlFor="phoneNumber">Broj mobitela</label>
                         <input
                             className={styles.input}
                             id="phoneNumber"
@@ -176,7 +186,7 @@ export default function EditClientForm({onCancel, data}) {
                     {formik.errors.phoneNumber ? <div className={styles.error}>{formik.errors.phoneNumber}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="dateOfBirth">Date of birth</label>
+                        <label htmlFor="dateOfBirth">Datum rođenja</label>
                         <input
                             className={styles.input}
                             id="dateOfBirth"
@@ -188,8 +198,8 @@ export default function EditClientForm({onCancel, data}) {
                     </div>
                     {formik.errors.dateOfBirth ? <div className={styles.error}>{formik.errors.dateOfBirth}</div> : null}
 
-                    <button className={styles.button} type="submit">Submit</button>
-                    <button className={styles.button} onClick={() => onCancel()}>Cancel</button>
+                    <button className={styles.button} type="submit">OK</button>
+                    <button className={styles.button} onClick={() => onCancel()}>Odustani</button>
 
                 </form>
             </main>

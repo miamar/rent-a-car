@@ -43,6 +43,7 @@ export default function EditContractForm({onCancel, data}) {
             errors.workerId = 'Required';
         }
 
+        // TODO
         if (values.rentedFrom > values.rentedUntil) {
             errors.rentedFrom = 'This can\'t be.';
             console.log(values.rentedFrom)
@@ -58,16 +59,22 @@ export default function EditContractForm({onCancel, data}) {
             clientId: selected.clientId ? selected.clientId : '',
             vehicleId: selected.vehicleId ? selected.vehicleId : '',
             workerId: selected.workerId ? selected.workerId : '',
-            rentedFrom: selected.rentedFrom ? selected.rentedFrom : '',
-            rentedUntil: selected.rentedUntil ? selected.rentedUntil : ''
+            rentedFrom: selected.rentedFrom ? selected.rentedFrom.substr(0,10) : '',
+            rentedUntil: selected.rentedUntil ? selected.rentedUntil.substr(0,10) : ''
         },
         validate,
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
                 saveChanges(values);
+                if(confirm("Uspješno ste uredili zapis o ugovoru!")){
+                    window.location.reload();
+                }
             } else {
                 createNewEntry(values);
+                if(confirm("Uspješno ste dodali novi ugovor!")){
+                    window.location.reload();
+                }
             }
         },
     });
@@ -80,7 +87,7 @@ export default function EditContractForm({onCancel, data}) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Podatci ugovora</h1>
+                <h1 className="">Podaci ugovora</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 
@@ -124,7 +131,7 @@ export default function EditContractForm({onCancel, data}) {
                     {formik.errors.workerId ? <div className={styles.error}>{formik.errors.workerId}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="rentedFrom">Rented from</label>
+                        <label htmlFor="rentedFrom">Iznajmljeno od</label>
                         <input
                             className={styles.input}
                             id="rentedFrom"
@@ -136,7 +143,7 @@ export default function EditContractForm({onCancel, data}) {
                     </div>
 
                     <div className={styles.forms}>
-                        <label htmlFor="rentedUntil">Rented until</label>
+                        <label htmlFor="rentedUntil">Iznajmljeno do</label>
                         <input
                             className={styles.input}
                             id="rentedUntil"
@@ -148,8 +155,8 @@ export default function EditContractForm({onCancel, data}) {
                     </div>
 
 
-                    <button className={styles.button} type="submit">Submit</button>
-                    <button className={styles.button} onClick={() => onCancel()}>Cancel</button>
+                    <button className={styles.button} type="submit">OK</button>
+                    <button className={styles.button} onClick={() => onCancel()}>Odustani</button>
 
                 </form>
             </main>
