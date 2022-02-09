@@ -43,10 +43,15 @@ export default function EditContractForm({onCancel, data}) {
             errors.workerId = 'Required';
         }
 
-        // TODO
-        if (values.rentedFrom > values.rentedUntil) {
-            errors.rentedFrom = 'This can\'t be.';
-            console.log(values.rentedFrom)
+        // dates
+        let dateRentedFrom = new Date(values.rentedFrom)
+        dateRentedFrom = dateRentedFrom.getTime()
+        let dateRentedUntil = new Date(values.rentedUntil)
+        dateRentedUntil = dateRentedUntil.getTime()
+
+        if (dateRentedFrom > dateRentedUntil) {
+            errors.rentedFrom = 'Datum "od" mora biti prije datuma "do"';
+            errors.rentedUntil = 'Datum "do" mora biti nakon datuma "od"';
         }
 
         return errors;
@@ -141,6 +146,7 @@ export default function EditContractForm({onCancel, data}) {
                             value={formik.values.rentedFrom}
                         />
                     </div>
+                    {formik.errors.rentedFrom ? <div className={styles.error}>{formik.errors.rentedFrom}</div> : null}
 
                     <div className={styles.forms}>
                         <label htmlFor="rentedUntil">Iznajmljeno do</label>
@@ -153,6 +159,7 @@ export default function EditContractForm({onCancel, data}) {
                             value={formik.values.rentedUntil}
                         />
                     </div>
+                    {formik.errors.rentedUntil ? <div className={styles.error}>{formik.errors.rentedUntil}</div> : null}
 
 
                     <button className={styles.button} type="submit">OK</button>

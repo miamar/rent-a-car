@@ -7,7 +7,9 @@ export default async function handler(req, res) {
         id,
         clientId,
         vehicleId,
-        workerId
+        workerId,
+        rentedFrom,
+        rentedUntil
     } = req.body
 
     const message = await prisma.contract.update({
@@ -15,9 +17,11 @@ export default async function handler(req, res) {
             id: id,
         },
         data: {
-            clientId: clientId,
-            vehicleId: vehicleId,
-            workerId: workerId
+            clientId: parseFloat(clientId),
+            vehicleId: parseFloat(vehicleId),
+            workerId: parseFloat(workerId),
+            rentedFrom: rentedFrom ? new Date(rentedFrom) : new Date(),
+            rentedUntil: rentedUntil ? new Date(rentedUntil) : new Date(),
         }
     })
     res.json(message)
