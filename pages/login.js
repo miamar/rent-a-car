@@ -1,6 +1,7 @@
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import React from 'react';
+import Link from 'next/link'
 import { useFormik } from 'formik';
 import {PrismaClient} from "@prisma/client";
 
@@ -53,7 +54,7 @@ export default function SignupForm(props) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Login</h1>
+                <h1 className="">Prijava u sustav</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 
@@ -83,12 +84,20 @@ export default function SignupForm(props) {
                         {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                     </div>
 
-                    <button className={styles.button} type="submit">OK</button>
-                    <button className={styles.button}><a href="/home">Odustani</a></button>
+                    <button className={styles.button} type="submit">Prijava</button>
+                    <button className={styles.button}>
+                        <Link href="/home">
+                            <a>Odustani</a>
+                        </Link>
+                    </button>
 
                     <p><a href={"#"}>Zaboravili ste lozinku?</a></p>
 
-                    <p><a href="/worker">Nemate račun? Registrirajte se.</a></p>
+                    <p>
+                        <Link href="/worker">
+                            <a>Nemate račun? Registrirajte se.</a>
+                        </Link>
+                    </p>
 
                 </form>
             </main>

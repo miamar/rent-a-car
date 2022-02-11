@@ -3,6 +3,7 @@ import Head from "next/head";
 import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditCollabForm from "./forms/edit-collab";
+import Link from "next/link";
 
 export default function Home(props) {
     const [editedCollab, setEditedCollab] = useState(null)
@@ -29,7 +30,7 @@ export default function Home(props) {
                 <tr key={id}>
                     <td className={styles.tabletd}>{type}</td>
                     <td className={styles.tabletd}>{name}</td>
-                    <td className={styles.tabletd}><a href={website} target="_blank">{website}</a></td>
+                    <td className={styles.tabletd}><a href={website} rel="noopener noreferrer" target="_blank">{website}</a></td>
                     <td className={styles.tabletd}>{description}</td>
                     <td><button onClick={() => setEditedCollab(collab)}>Uredi</button></td>
                     <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
@@ -69,7 +70,11 @@ export default function Home(props) {
 
                 <div>
                     <button onClick={() => setEditedCollab('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}><a href="/home">Početna</a></button>
+                    <button className={styles.button}>
+                        <Link href="/home">
+                            <a>Početna</a>
+                        </Link>
+                    </button>
                 </div>
 
 

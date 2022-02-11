@@ -1,5 +1,6 @@
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
+import Link from 'next/link'
 import { PrismaClient } from '@prisma/client'
 
 export default function Home(props) {
@@ -18,7 +19,11 @@ export default function Home(props) {
 
                 <p className={styles.description}>
                     Za prijavu u sustav klikni ovdje &rarr;{' '}
-                    <code className={styles.code}><a href="/login">Log in</a></code>
+                    <code className={styles.code}>
+                        <Link href="/login">
+                            <a>Prijava</a>
+                        </Link>
+                    </code>
                 </p>
 
                 <p className="">
@@ -26,47 +31,49 @@ export default function Home(props) {
                 </p>
 
                 <div className={styles.grid}>
-                    <a href="/vehicle" className={styles.card}>
-                        <h2>Vozila &rarr;</h2>
-                        <p>Informacije o vozilima, unos novih i izmjena postojećih podataka.</p>
-                    </a>
 
-                    <a href="/worker" className={styles.card}>
-                        <h2>Zaposlenici &rarr;</h2>
-                        <p>Informacije o zaposlenicima, unos i izmjena postojećih podataka.</p>
-                    </a>
+                    <Link href="/vehicle">
+                        <a className={styles.card}>
+                            <h2>Vozila &rarr;</h2>
+                            <p>Informacije o vozilima, unos novih i izmjena postojećih podataka.</p>
+                        </a>
+                    </Link>
 
-                    <a
-                        href="/client"
-                        className={styles.card}
-                    >
-                        <h2>Klijenti &rarr;</h2>
-                        <p>Informacije o korisnicima, unos novih i izmjena postojećih podataka.</p>
-                    </a>
+                    <Link href="/worker">
+                        <a className={styles.card}>
+                            <h2>Zaposlenici &rarr;</h2>
+                            <p>Informacije o zaposlenicima, unos novih i izmjena postojećih podataka.</p>
+                        </a>
+                    </Link>
 
-                    <a
-                        href="/office"
-                        className={styles.card}
-                    >
-                        <h2>Poslovnice &rarr;</h2>
-                        <p>Popis poslovnica, unos novih i izmjena postojećih podataka.</p>
-                    </a>
+                    <Link href="/client">
+                        <a className={styles.card}>
+                            <h2>Klijenti &rarr;</h2>
+                            <p>Informacije o korisnicima, unos novih i izmjena postojećih podataka.</p>
+                        </a>
+                    </Link>
 
-                    <a
-                        href="/collab"
-                        className={styles.card}
-                    >
-                        <h2>Vanjska suradnja &rarr;</h2>
-                        <p>Hoteli, aerodromi...</p>
-                    </a>
+                    <Link href="/office">
+                        <a className={styles.card}>
+                            <h2>Poslovnice &rarr;</h2>
+                            <p>Popis poslovnica, unos novih i izmjena postojećih podataka.</p>
+                        </a>
+                    </Link>
 
-                    <a
-                        href="/contract"
-                        className={styles.card}
-                    >
-                        <h2>Ugovori &rarr;</h2>
-                        <p>Pregled svih postojećih ugovora i dodavanje novih.</p>
-                    </a>
+                    <Link href="/collab">
+                        <a className={styles.card}>
+                            <h2>Vanjska suradnja &rarr;</h2>
+                            <p>Hoteli, aerodromi...</p>
+                        </a>
+                    </Link>
+
+                    <Link href="/contract">
+                        <a className={styles.card}>
+                            <h2>Iznajmljivanje &rarr;</h2>
+                            <p>Pregled svih postojećih ugovora i dodavanje novih.</p>
+                        </a>
+                    </Link>
+
                 </div>
             </main>
 

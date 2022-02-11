@@ -54,8 +54,8 @@ model Vehicle {
   model        String
   year         Int
   seats        Int
-  transmission String?
-  consumption  Int?
+  transmission String
+  consumption  Int
   fuel         String
   price        Float
   rented       Boolean @default(false)
@@ -87,4 +87,7 @@ model Contract {
   workerId     Int
   rentedFrom   DateTime
   rentedUntil  DateTime
+  price        Int
+  openReturn   Boolean
+  insurance    Boolean
 }

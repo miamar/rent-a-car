@@ -3,6 +3,7 @@ import Head from "next/head";
 import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditContractForm from "./forms/edit-contract";
+import Link from "next/link";
 
 export default function Home(props) {
     console.log(props.data)
@@ -26,7 +27,7 @@ export default function Home(props) {
     function renderTableData() {
 
         return contracts.map((contract) => {
-            const { id, rentedFrom, rentedUntil, client, vehicle, worker } = contract
+            const { id, rentedFrom, rentedUntil, client, vehicle, worker, price, openReturn, insurance } = contract
             return (
                 <tr key={id}>
                     <td className={styles.tabletd}>{client.firstName} {client.lastName}</td>
@@ -34,6 +35,9 @@ export default function Home(props) {
                     <td className={styles.tabletd}>{worker.firstName} {worker.lastName}</td>
                     <td className={styles.tabletd}>{rentedFrom.substr(0,10)}</td>
                     <td className={styles.tabletd}>{rentedUntil.substr(0,10)}</td>
+                    <td className={styles.tabletd}>{price}</td>
+                    <td className={styles.tabletd}>{insurance}</td>
+                    <td className={styles.tabletd}>{openReturn}</td>
                     <td><button onClick={() => setEditedContract(contract)}>Uredi</button></td>
                     <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
@@ -65,6 +69,9 @@ export default function Home(props) {
                             <td className={styles.tablefirst}>zaposlenik ime</td>
                             <td className={styles.tablefirst}>od</td>
                             <td className={styles.tablefirst}>do</td>
+                            <td className={styles.tablefirst}>cijena najma</td>
+                            <td className={styles.tablefirst}>dodatno osiguranje</td>
+                            <td className={styles.tablefirst}>otvoreni povratak</td>
                         </tr>
                         {renderTableData()}
                         </tbody>
@@ -73,7 +80,11 @@ export default function Home(props) {
 
                 <div>
                     <button onClick={() => setEditedContract('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}><a href="/home">Početna</a></button>
+                    <button className={styles.button}>
+                        <Link href="/home">
+                            <a>Početna</a>
+                        </Link>
+                    </button>
                 </div>
 
 

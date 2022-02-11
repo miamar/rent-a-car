@@ -1,5 +1,6 @@
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
+import Link from 'next/link'
 import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditClientForm from "./forms/edit-client";
@@ -74,7 +75,11 @@ export default function Home(props) {
 
                 <div>
                     <button onClick={() => setEditedClient('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}><a href="/home">Početna</a></button>
+                    <button className={styles.button}>
+                        <Link href="/home">
+                            <a>Početna</a>
+                        </Link>
+                    </button>
                 </div>
 
 

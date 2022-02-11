@@ -43,6 +43,14 @@ export default function EditContractForm({onCancel, data}) {
             errors.workerId = 'Required';
         }
 
+        if (!values.rentedFrom) {
+            errors.rentedFrom = 'Required';
+        }
+
+        if (!values.rentedUntil) {
+            errors.rentedUntil = 'Required';
+        }
+
         // dates
         let dateRentedFrom = new Date(values.rentedFrom)
         dateRentedFrom = dateRentedFrom.getTime()
@@ -65,7 +73,10 @@ export default function EditContractForm({onCancel, data}) {
             vehicleId: selected.vehicleId ? selected.vehicleId : '',
             workerId: selected.workerId ? selected.workerId : '',
             rentedFrom: selected.rentedFrom ? selected.rentedFrom.substr(0,10) : '',
-            rentedUntil: selected.rentedUntil ? selected.rentedUntil.substr(0,10) : ''
+            rentedUntil: selected.rentedUntil ? selected.rentedUntil.substr(0,10) : '',
+            openReturn: selected.openReturn ? selected.openReturn : false,
+            insurance: selected.insurance ? selected.insurance : false,
+            price: selected.price ? selected.id : 0
         },
         validate,
         onSubmit: values => {
@@ -83,6 +94,43 @@ export default function EditContractForm({onCancel, data}) {
             }
         },
     });
+
+    const disablePastDate = () => {
+        const today = new Date();
+        const dd = String(today.getDate() + 1).padStart(2, "0");
+        const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+        const yyyy = today.getFullYear();
+        return yyyy + "-" + mm + "-" + dd;
+    };
+
+    const calculatePrice = () => {
+        const vehiclePricePerDay = 100
+
+        let dateUntil = new Date(formik.values.rentedUntil).getTime()
+        let dateFrom = new Date(formik.values.rentedFrom).getTime()
+        let diff = dateUntil - dateFrom
+        let diffInH = diff  / 3600000
+        let diffInDays = diffInH / 24
+
+        let premiumInsurance = 0
+        let openReturn = 0
+        let discount = 1
+
+        if (diffInDays > 7) {
+            discount = 0.9
+        }
+
+        if (formik.values.insurance) {
+            premiumInsurance = 300
+        }
+        if (formik.values.openReturn) {
+            openReturn = 100
+        }
+
+        formik.values.price = diffInDays * (vehiclePricePerDay * discount) + premiumInsurance + openReturn
+    };
+
+
     return (
         <div className={styles.container}>
             <Head>
@@ -142,6 +190,7 @@ export default function EditContractForm({onCancel, data}) {
                             id="rentedFrom"
                             name="rentedFrom"
                             type="date"
+                            min={disablePastDate()}
                             onChange={formik.handleChange}
                             value={formik.values.rentedFrom}
                         />
@@ -155,11 +204,53 @@ export default function EditContractForm({onCancel, data}) {
                             id="rentedUntil"
                             name="rentedUntil"
                             type="date"
+                            min={disablePastDate()}
                             onChange={formik.handleChange}
                             value={formik.values.rentedUntil}
                         />
                     </div>
                     {formik.errors.rentedUntil ? <div className={styles.error}>{formik.errors.rentedUntil}</div> : null}
+
+                    <div className={styles.forms}>
+                        <label htmlFor="openReturn">Otvoreni povratak</label>
+                        <input
+                            className={styles.input}
+                            id="openReturn"
+                            name="openReturn"
+                            type="checkbox"
+                            onChange={formik.handleChange}
+                            value={formik.values.openReturn}
+                        />
+                    </div>
+                    {formik.errors.openReturn ? <div className={styles.error}>{formik.errors.openReturn}</div> : null}
+
+                    <div className={styles.forms}>
+                        <label htmlFor="insurance">Dodatno osiguranje</label>
+                        <input
+                            className={styles.input}
+                            id="insurance"
+                            name="insurance"
+                            type="checkbox"
+                            onChange={formik.handleChange}
+                            value={formik.values.insurance}
+                        />
+                    </div>
+                    {formik.errors.insurance ? <div className={styles.error}>{formik.errors.insurance}</div> : null}
+
+                    <div className={styles.forms}>
+                        <label htmlFor="price">Cijena najma</label>
+                        <input
+                            className={styles.input}
+                            id="price"
+                            name="price"
+                            type="text"
+                            onChange={formik.handleChange}
+                            value={formik.values.price}
+                            disabled="disabled"
+                        />
+                        <a onClick={calculatePrice()} href={"#"} className={styles.linkie}>Izračunaj</a>
+                    </div>
+                    {formik.errors.price ? <div className={styles.error}>{formik.errors.price}</div> : null}
 
 
                     <button className={styles.button} type="submit">OK</button>

@@ -3,6 +3,7 @@ import Head from "next/head";
 import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditOfficeForm from "./forms/edit-office";
+import Link from "next/link";
 
 export default function Home(props) {
     const [editedOffice, setEditedOffice] = useState(null)
@@ -67,7 +68,11 @@ export default function Home(props) {
 
                 <div>
                     <button onClick={() => setEditedOffice('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}><a href="/home">Početna</a></button>
+                    <button className={styles.button}>
+                        <Link href="/home">
+                            <a>Početna</a>
+                        </Link>
+                    </button>
                 </div>
 
 

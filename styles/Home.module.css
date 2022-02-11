@@ -148,6 +148,12 @@
   padding-right: 25px;
 }
 
+.linkie {
+  margin-left: 10px;
+  text-decoration: underline;
+  color: blue;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
