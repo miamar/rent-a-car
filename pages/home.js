@@ -26,9 +26,7 @@ export default function Home(props) {
                     </code>
                 </p>
 
-                <p className="">
-                    OR: Trenutno ste prijavljeni u sustav kao <code className={styles.code}>{props.allUsers[1].username}</code>
-                </p>
+
 
                 <div className={styles.grid}>
 

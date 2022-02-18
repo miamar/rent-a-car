@@ -5,7 +5,7 @@ import {useState} from "react";
 import EditCollabForm from "./forms/edit-collab";
 import Link from "next/link";
 
-export default function Home(props) {
+export default function Collab(props) {
     const [editedCollab, setEditedCollab] = useState(null)
     const [collabs, setCollabs] = useState(props.data)
 

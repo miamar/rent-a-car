@@ -5,7 +5,7 @@ import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditClientForm from "./forms/edit-client";
 
-export default function Home(props) {
+export default function Client(props) {
     const [editedClient, setEditedClient] = useState(null)
     const [clients, setClients] = useState(props.data)
 

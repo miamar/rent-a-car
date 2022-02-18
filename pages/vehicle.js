@@ -5,7 +5,7 @@ import {useState} from "react";
 import EditVehicleForm from "./forms/edit-vehicle";
 import Link from "next/link";
 
-export default function Home(props) {
+export default function Vehicle(props) {
     const [editedVehicle, setEditedVehicle] = useState(null)
     const [vehicles, setVehicles] = useState(props.data)
 

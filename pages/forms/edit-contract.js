@@ -2,9 +2,15 @@ import styles from "../../styles/Home.module.css";
 import Head from "next/head";
 import React, {useEffect, useState} from 'react';
 import { useFormik } from 'formik';
+import {PrismaClient} from "@prisma/client";
 
 export default function EditContractForm({onCancel, data}) {
-    const [selected, setSelected] = useState(data)
+    const [selected, setSelected] = useState(data.editedContract)
+    const [clients, setClients] = useState(data.clients)
+    const [vehicles, setVehicles] = useState(data.vehicles)
+    const [workers, setWorkers] = useState(data.workers)
+
+    console.log(data)
 
     const createNewEntry = async (values) => {
         const res = await fetch('/api/new-contract', {
@@ -104,7 +110,14 @@ export default function EditContractForm({onCancel, data}) {
     };
 
     const calculatePrice = () => {
-        const vehiclePricePerDay = 100
+        let vehiclePricePerDay = 0
+
+        for (let i=0; i<vehicles.length; i++) {
+            if (vehicles[i].id == formik.values.vehicleId) {
+                vehiclePricePerDay = vehicles[i].price
+            }
+        }
+        console.log(vehiclePricePerDay)
 
         let dateUntil = new Date(formik.values.rentedUntil).getTime()
         let dateFrom = new Date(formik.values.rentedFrom).getTime()
@@ -130,6 +143,36 @@ export default function EditContractForm({onCancel, data}) {
         formik.values.price = diffInDays * (vehiclePricePerDay * discount) + premiumInsurance + openReturn
     };
 
+    function renderClientData() {
+
+        return clients.map((client, i) => {
+            const { id, firstName, lastName } = client
+            return (
+                <option key={id} value={id}>{firstName} {lastName}</option>
+            )
+        })
+    }
+
+    function renderVehicleData() {
+
+        return vehicles.map((vehicle, i) => {
+            const { id, make, model, year, plates } = vehicle
+            return (
+                <option key={id} value={id}>{make} {model} {year}</option>
+            )
+        })
+    }
+
+    function renderWorkerData() {
+
+        return workers.map((worker, i) => {
+            const { id, firstName, lastName } = worker
+            return (
+                <option key={id} value={id}>{firstName} {lastName}</option>
+            )
+        })
+    }
+
 
     return (
         <div className={styles.container}>
@@ -145,43 +188,48 @@ export default function EditContractForm({onCancel, data}) {
                 <form onSubmit={formik.handleSubmit}>
 
                     <div className={styles.forms}>
-                        <label htmlFor="clientId">Client ID</label>
-                        <input
-                            className={styles.input}
+                        <label htmlFor="clientId">Klijent</label>
+                        <select
                             id="clientId"
                             name="clientId"
-                            type="text"
                             onChange={formik.handleChange}
                             value={formik.values.clientId}
-                        />
+                            className={styles.input} >
+                            <option value=""/>
+                            {renderClientData()}
+                        </select>
                     </div>
                     {formik.errors.clientId ? <div className={styles.error}>{formik.errors.clientId}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="vehicleId">Vehicle ID</label>
-                        <input
-                            className={styles.input}
+                        <label htmlFor="vehicleId">Vozilo</label>
+                        <select
                             id="vehicleId"
                             name="vehicleId"
-                            type="text"
                             onChange={formik.handleChange}
                             value={formik.values.vehicleId}
-                        />
+                            className={styles.input} >
+                            <option value=""/>
+                            {renderVehicleData()}
+                        </select>
                     </div>
                     {formik.errors.vehicleId ? <div className={styles.error}>{formik.errors.vehicleId}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="workerId">Worker ID</label>
-                        <input
-                            className={styles.input}
+                        <label htmlFor="workerId">Zaposlenik</label>
+                        <select
                             id="workerId"
                             name="workerId"
-                            type="text"
                             onChange={formik.handleChange}
                             value={formik.values.workerId}
-                        />
+                            className={styles.input} >
+                            <option value=""/>
+                            {renderWorkerData()}
+                        </select>
                     </div>
                     {formik.errors.workerId ? <div className={styles.error}>{formik.errors.workerId}</div> : null}
+
+
 
                     <div className={styles.forms}>
                         <label htmlFor="rentedFrom">Iznajmljeno od</label>
@@ -212,7 +260,7 @@ export default function EditContractForm({onCancel, data}) {
                     {formik.errors.rentedUntil ? <div className={styles.error}>{formik.errors.rentedUntil}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="openReturn">Otvoreni povratak</label>
+                        <label htmlFor="openReturn">Povrat izvan poslovnice</label>
                         <input
                             className={styles.input}
                             id="openReturn"
@@ -248,7 +296,7 @@ export default function EditContractForm({onCancel, data}) {
                             value={formik.values.price}
                             disabled="disabled"
                         />
-                        <a onClick={calculatePrice()} href={"#"} className={styles.linkie}>Izračunaj</a>
+                        <a onClick={calculatePrice()} href={"#"} className={styles.linkie}></a>
                     </div>
                     {formik.errors.price ? <div className={styles.error}>{formik.errors.price}</div> : null}
 
@@ -261,3 +309,4 @@ export default function EditContractForm({onCancel, data}) {
         </div>
     );
 };
+

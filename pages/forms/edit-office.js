@@ -79,7 +79,7 @@ export default function EditOfficeForm({onCancel, data}) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Podatci poslovnice</h1>
+                <h1 className="">Podaci poslovnice</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 

@@ -5,7 +5,7 @@ import {useState} from "react";
 import EditWorkerForm from "./forms/edit-worker";
 import Link from "next/link";
 
-export default function Home(props) {
+export default function Worker(props) {
     const [editedWorker, setEditedWorker] = useState(null)
     const [workers, setWorkers] = useState(props.data)
 

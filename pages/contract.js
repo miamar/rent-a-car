@@ -5,11 +5,12 @@ import {useState} from "react";
 import EditContractForm from "./forms/edit-contract";
 import Link from "next/link";
 
-export default function Home(props) {
-    console.log(props.data)
+export default function Contract(props) {
 
     const [editedContract, setEditedContract] = useState(null)
     const [contracts, setContracts] = useState(props.data)
+
+    let dataToSend = {editedContract: editedContract, clients: props.dataC, vehicles: props.dataV, workers: props.dataW}
 
     const deleteFromDatabase = async (values) => {
         const res = await fetch('api/delete-contract', {
@@ -36,8 +37,8 @@ export default function Home(props) {
                     <td className={styles.tabletd}>{rentedFrom.substr(0,10)}</td>
                     <td className={styles.tabletd}>{rentedUntil.substr(0,10)}</td>
                     <td className={styles.tabletd}>{price}</td>
-                    <td className={styles.tabletd}>{insurance}</td>
-                    <td className={styles.tabletd}>{openReturn}</td>
+                    <td className={styles.tabletd}>{insurance.toString()}</td>
+                    <td className={styles.tabletd}>{openReturn.toString()}</td>
                     <td><button onClick={() => setEditedContract(contract)}>Uredi</button></td>
                     <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
@@ -46,7 +47,7 @@ export default function Home(props) {
     }
 
     if (editedContract) {
-        return <EditContractForm onCancel={() => setEditedContract(null)} data={editedContract}/>
+        return <EditContractForm onCancel={() => setEditedContract(null)} data={dataToSend}/>
     }
 
     return (
@@ -71,7 +72,7 @@ export default function Home(props) {
                             <td className={styles.tablefirst}>do</td>
                             <td className={styles.tablefirst}>cijena najma</td>
                             <td className={styles.tablefirst}>dodatno osiguranje</td>
-                            <td className={styles.tablefirst}>otvoreni povratak</td>
+                            <td className={styles.tablefirst}>Povrat izvan poslovnice</td>
                         </tr>
                         {renderTableData()}
                         </tbody>
@@ -96,7 +97,16 @@ export default function Home(props) {
 export async function getServerSideProps() {
     const prisma = new PrismaClient()
 
-    const allOffices = await prisma.contract.findMany({
+    const allVehicles = await prisma.vehicle.findMany()
+    const dataV = JSON.parse(JSON.stringify(allVehicles))
+
+    const allClients = await prisma.client.findMany()
+    const dataC = JSON.parse(JSON.stringify(allClients))
+
+    const allWorkers = await prisma.worker.findMany()
+    const dataW = JSON.parse(JSON.stringify(allWorkers))
+
+    const allContracts = await prisma.contract.findMany({
         where: {
 
         },
@@ -106,8 +116,8 @@ export async function getServerSideProps() {
             worker: true
         },
     })
-    const data = JSON.parse(JSON.stringify(allOffices))
+    const data = JSON.parse(JSON.stringify(allContracts))
     return {
-        props : { data }
+        props : { data, dataV, dataC, dataW }
     }
 }

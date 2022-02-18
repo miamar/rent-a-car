@@ -5,7 +5,7 @@ import {useState} from "react";
 import EditOfficeForm from "./forms/edit-office";
 import Link from "next/link";
 
-export default function Home(props) {
+export default function Office(props) {
     const [editedOffice, setEditedOffice] = useState(null)
     const [offices, setOffices] = useState(props.data)
 

@@ -4,15 +4,15 @@ import React from 'react';
 import Link from 'next/link'
 import { useFormik } from 'formik';
 import {PrismaClient} from "@prisma/client";
+import useAuth from "./api/auth/login";
 
-export default function SignupForm(props) {
+export default function LoginForm(props) {
+    const {login} = useAuth();
 
-    function isAuthValid() {
+    function isAuthValid(values) {
 
-        if (values.email in props.data.email){
-            return true
-        } else {
-            return false
+        for (let i=0; i<props.data.length; i++) {
+            return values.email === props.data[i].email && values.password === props.data[i].password;
         }
     }
 
@@ -28,7 +28,7 @@ export default function SignupForm(props) {
         if (!values.password) {
             errors.password = 'Required';
         } else if (values.password.length < 8) {
-            errors.password = 'Must be 8 characters or more';
+            //errors.password = 'Must be 8 characters or more';
         }
 
         return errors;
@@ -42,7 +42,9 @@ export default function SignupForm(props) {
         },
         validate,
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            if (isAuthValid(values)){
+                login(values)
+            }
         },
     });
     return (
@@ -68,8 +70,8 @@ export default function SignupForm(props) {
                             onChange={formik.handleChange}
                             value={formik.values.email}
                         />
-                        {formik.errors.email ? <div>{formik.errors.email}</div> : null}
                     </div>
+                    {formik.errors.email ? <div className={styles.error}>{formik.errors.email}</div> : null}
 
                     <div className={styles.forms}>
                         <label htmlFor="password">Lozinka</label>
@@ -81,8 +83,8 @@ export default function SignupForm(props) {
                             onChange={formik.handleChange}
                             value={formik.values.password}
                         />
-                        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                     </div>
+                    {formik.errors.password ? <div className={styles.error}>{formik.errors.password}</div> : null}
 
                     <button className={styles.button} type="submit">Prijava</button>
                     <button className={styles.button}>
@@ -107,8 +109,8 @@ export default function SignupForm(props) {
 
 export async function getServerSideProps() {
     const prisma = new PrismaClient()
-    const allWorkers = await prisma.auth.findMany()
-    const data = JSON.parse(JSON.stringify(allWorkers))
+    const allAuth = await prisma.auth.findMany()
+    const data = JSON.parse(JSON.stringify(allAuth))
     return {
         props : { data }
     }

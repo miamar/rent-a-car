@@ -75,6 +75,7 @@ export default function EditCollabForm({onCancel, data}) {
             }
         },
     });
+
     return (
         <div className={styles.container}>
             <Head>
@@ -84,7 +85,7 @@ export default function EditCollabForm({onCancel, data}) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">New collaboration</h1>
+                <h1 className="">Podaci vanjske suradnje</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 
