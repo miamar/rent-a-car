@@ -82,8 +82,8 @@ const Worker = (props) => {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedWorker('w')} className={styles.buttonMain}>Dodaj novo</button>
-                    <button className={styles.buttonMain}>
+                    <button onClick={() => setEditedWorker('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}>
                         <Link href="/home">
                             <a>Početna</a>
                         </Link>

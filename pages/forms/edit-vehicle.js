@@ -231,7 +231,7 @@ export default function EditVehicleForm({onCancel, data}) {
                     {formik.errors.price ? <div className={styles.error}>{formik.errors.price}</div> : null}
 
                     <button className={styles.button} type="submit">OK</button>
-                    <button className={styles.button} onClick={() => onCancel()}>Odustani</button>
+                    <button className={styles.buttonCancel} onClick={() => onCancel()}>Odustani</button>
 
                 </form>
             </main>
