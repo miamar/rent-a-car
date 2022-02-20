@@ -86,8 +86,8 @@ const Vehicle = (props) => {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedVehicle('w')} className={styles.buttonMain}>Dodaj novo</button>
-                    <button className={styles.buttonMain}>
+                    <button onClick={() => setEditedVehicle('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}>
                         <Link href="/">
                             <a>Početna</a>
                         </Link>

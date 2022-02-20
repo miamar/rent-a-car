@@ -302,7 +302,7 @@ export default function EditContractForm({onCancel, data}) {
 
 
                     <button className={styles.button} type="submit">OK</button>
-                    <button className={styles.button} onClick={() => onCancel()}>Odustani</button>
+                    <button className={styles.buttonCancel} onClick={() => onCancel()}>Odustani</button>
 
                 </form>
             </main>

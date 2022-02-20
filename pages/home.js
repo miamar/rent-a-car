@@ -26,7 +26,7 @@ const Home = (props) => {
             <main className={styles.main}>
 
                 <form onSubmit={formik.handleSubmit}>
-                    <button type="submit">Odjava</button>
+                    <button type="submit" className={styles.button}>Odjava</button>
                 </form>
 
                 <h1 className={styles.title}>

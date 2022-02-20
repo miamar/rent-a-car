@@ -199,7 +199,7 @@ export default function EditClientForm({onCancel, data}) {
                     {formik.errors.dateOfBirth ? <div className={styles.error}>{formik.errors.dateOfBirth}</div> : null}
 
                     <button className={styles.button} type="submit">OK</button>
-                    <button className={styles.button} onClick={() => onCancel()}>Odustani</button>
+                    <button className={styles.buttonCancel} onClick={() => onCancel()}>Odustani</button>
 
                 </form>
             </main>
