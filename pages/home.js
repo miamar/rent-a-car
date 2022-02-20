@@ -2,7 +2,7 @@ import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import Link from 'next/link'
 import { PrismaClient } from '@prisma/client'
-import {ProtectRoute} from "./router";
+import {ProtectRoute} from "../components/router";
 import {useFormik} from "formik";
 import useAuth from "../context/auth/login";
 

@@ -5,7 +5,7 @@ import {useState} from "react";
 import EditCollabForm from "./forms/edit-collab";
 import Link from "next/link";
 import Navigation from "./navigation";
-import {ProtectRoute} from "./router";
+import {ProtectRoute} from "../components/router";
 
 const Collab = (props) => {
     const [editedCollab, setEditedCollab] = useState(null)

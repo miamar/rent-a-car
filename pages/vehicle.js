@@ -4,7 +4,7 @@ import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditVehicleForm from "./forms/edit-vehicle";
 import Link from "next/link";
-import {ProtectRoute} from "./router";
+import {ProtectRoute} from "../components/router";
 import Navigation from "./navigation";
 
 const Vehicle = (props) => {

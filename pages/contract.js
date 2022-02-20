@@ -5,7 +5,7 @@ import {useState} from "react";
 import EditContractForm from "./forms/edit-contract";
 import Link from "next/link";
 import Navigation from "./navigation";
-import {ProtectRoute} from "./router";
+import {ProtectRoute} from "../components/router";
 
 const Contract = (props) => {
 

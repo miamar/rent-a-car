@@ -5,7 +5,7 @@ import {useState} from "react";
 import EditOfficeForm from "./forms/edit-office";
 import Link from "next/link";
 import Navigation from "./navigation";
-import {ProtectRoute} from "./router";
+import {ProtectRoute} from "../components/router";
 
 const Office = (props) => {
 
