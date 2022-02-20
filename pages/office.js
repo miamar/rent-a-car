@@ -4,10 +4,19 @@ import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditOfficeForm from "./forms/edit-office";
 import Link from "next/link";
+import Navigation from "./navigation";
+import {ProtectRoute} from "./router";
 
-export default function Office(props) {
+const Office = (props) => {
+
     const [editedOffice, setEditedOffice] = useState(null)
     const [offices, setOffices] = useState(props.data)
+    const [pageNumber, setPageNumber] = useState(1)
+
+    const numberOfOffices = props.data.length
+    const numberOfPages = Math.ceil(numberOfOffices / 5)
+
+    console.log("here I am")
 
     const deleteFromDatabase = async (values) => {
         const res = await fetch('api/delete-office', {
@@ -22,18 +31,35 @@ export default function Office(props) {
         setOffices(offices.filter(office => office.id !== data.id));
     };
 
-    function renderTableData() {
+    function renderTableData(pageNumber) {
 
         return offices.map((office, index) => {
             const { id, address, phoneNumber, workHours } = office
+            if (index >= pageNumber*5-5 && index <= pageNumber*5-1) {
+                return (
+                    <tr key={id}>
+                        <td className={styles.tabletd}>{address}</td>
+                        <td className={styles.tabletd}>{phoneNumber}</td>
+                        <td className={styles.tabletd}>{workHours}</td>
+                        <td>
+                            <button className={styles.buttonTable} onClick={() => setEditedOffice(office)}>Uredi</button>
+                        </td>
+                        <td>
+                            <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button>
+                        </td>
+                    </tr>
+                )
+            }
+        })
+    }
+
+    function renderPageNumbers(numberOfPages) {
+        let arrayPages = [...Array(numberOfPages+1).keys()]
+        arrayPages.shift()
+
+        return arrayPages.map((page) => {
             return (
-                <tr key={id}>
-                    <td className={styles.tabletd}>{address}</td>
-                    <td className={styles.tabletd}>{phoneNumber}</td>
-                    <td className={styles.tabletd}>{workHours}</td>
-                    <td><button onClick={() => setEditedOffice(office)}>Uredi</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
-                </tr>
+                <a key={page} onClick={() => setPageNumber(page)} href={"#"} className={styles.linkPageView}>{page}</a>
             )
         })
     }
@@ -51,28 +77,36 @@ export default function Office(props) {
             </Head>
 
             <main className={styles.main}>
+
+                <Navigation/>
+
                 <h1 className="">Poslovnice</h1>
 
                 <div>
-                    <table>
+                    <table className={styles.tableall}>
                         <tbody>
                         <tr>
                             <td className={styles.tablefirst}>adresa</td>
                             <td className={styles.tablefirst}>broj telefona</td>
                             <td className={styles.tablefirst}>radno vrijeme</td>
                         </tr>
-                        {renderTableData()}
+                        {renderTableData(pageNumber)}
                         </tbody>
                     </table>
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedOffice('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}>
+                    <button onClick={() => setEditedOffice('w')} className={styles.buttonMain}>Dodaj novo</button>
+                    <button className={styles.buttonMain}>
                         <Link href="/home">
                             <a>Početna</a>
                         </Link>
                     </button>
+                </div>
+
+                <div className={styles.pageView}>
+                    <a className={styles.linkPageView}>Broj stranice:</a>
+                    {renderPageNumbers(numberOfPages)}
                 </div>
 
 
@@ -80,6 +114,8 @@ export default function Office(props) {
         </div>
     )
 }
+
+export default ProtectRoute(Office)
 
 export async function getServerSideProps() {
     const prisma = new PrismaClient()

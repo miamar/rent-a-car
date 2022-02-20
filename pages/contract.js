@@ -4,8 +4,10 @@ import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditContractForm from "./forms/edit-contract";
 import Link from "next/link";
+import Navigation from "./navigation";
+import {ProtectRoute} from "./router";
 
-export default function Contract(props) {
+const Contract = (props) => {
 
     const [editedContract, setEditedContract] = useState(null)
     const [contracts, setContracts] = useState(props.data)
@@ -36,11 +38,11 @@ export default function Contract(props) {
                     <td className={styles.tabletd}>{worker.firstName} {worker.lastName}</td>
                     <td className={styles.tabletd}>{rentedFrom.substr(0,10)}</td>
                     <td className={styles.tabletd}>{rentedUntil.substr(0,10)}</td>
-                    <td className={styles.tabletd}>{price}</td>
+                    <td className={styles.tabletd}>{price} kn</td>
                     <td className={styles.tabletd}>{insurance.toString()}</td>
                     <td className={styles.tabletd}>{openReturn.toString()}</td>
-                    <td><button onClick={() => setEditedContract(contract)}>Uredi</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
+                    <td><button className={styles.buttonTable} onClick={() => setEditedContract(contract)}>Uredi</button></td>
+                    <td><button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -59,10 +61,13 @@ export default function Contract(props) {
             </Head>
 
             <main className={styles.main}>
+
+                <Navigation/>
+
                 <h1 className="">Ugovori</h1>
 
                 <div>
-                    <table>
+                    <table className={styles.tableall}>
                         <tbody>
                         <tr>
                             <td className={styles.tablefirst}>klijent ime</td>
@@ -80,8 +85,8 @@ export default function Contract(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedContract('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}>
+                    <button onClick={() => setEditedContract('w')} className={styles.buttonMain}>Dodaj novo</button>
+                    <button className={styles.buttonMain}>
                         <Link href="/home">
                             <a>Početna</a>
                         </Link>
@@ -93,6 +98,8 @@ export default function Contract(props) {
         </div>
     )
 }
+
+export default ProtectRoute(Contract)
 
 export async function getServerSideProps() {
     const prisma = new PrismaClient()

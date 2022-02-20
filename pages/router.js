@@ -1,10 +1,10 @@
 import {useRouter} from "next/router";
 import {useEffect} from "react";
-import useAuth from "./api/auth/login";
+import useAuth from "../context/auth/login";
 
 export function ProtectRoute(Component) {
-    return () => {
-        const {user, isAuthenticated, loading} = useAuth();
+    const ContainerComponent = ({ children, ...props }) => {
+        const {isAuthenticated, loading} = useAuth();
         const router = useRouter();
 
         useEffect(() => {
@@ -13,6 +13,8 @@ export function ProtectRoute(Component) {
             }
         }, [loading, isAuthenticated]);
 
-        return (<Component {...arguments} />)
-    }
+        return (<Component {...props} />)
+    };
+
+    return ContainerComponent;
 }

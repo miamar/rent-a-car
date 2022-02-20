@@ -2,8 +2,19 @@ import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import Link from 'next/link'
 import { PrismaClient } from '@prisma/client'
+import {ProtectRoute} from "./router";
+import {useFormik} from "formik";
+import useAuth from "../context/auth/login";
 
-export default function Home(props) {
+const Home = (props) => {
+    const {logout} = useAuth()
+
+    const formik = useFormik({
+        onSubmit: values => {
+            logout()
+        },
+    });
+
     return (
         <div className={styles.container}>
             <Head>
@@ -13,19 +24,14 @@ export default function Home(props) {
             </Head>
 
             <main className={styles.main}>
+
+                <form onSubmit={formik.handleSubmit}>
+                    <button type="submit">Odjava</button>
+                </form>
+
                 <h1 className={styles.title}>
-                    Dobrodošli!
+                    Rent a car Vertigo
                 </h1>
-
-                <p className={styles.description}>
-                    Za prijavu u sustav klikni ovdje &rarr;{' '}
-                    <code className={styles.code}>
-                        <Link href="/login">
-                            <a>Prijava</a>
-                        </Link>
-                    </code>
-                </p>
-
 
 
                 <div className={styles.grid}>
@@ -79,10 +85,4 @@ export default function Home(props) {
     )
 }
 
-export async function getServerSideProps() {
-    const prisma = new PrismaClient()
-    const allUsers = await prisma.auth.findMany()
-    return {
-        props : { allUsers }
-    }
-}
+export default ProtectRoute(Home)

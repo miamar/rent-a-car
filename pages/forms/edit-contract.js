@@ -296,7 +296,7 @@ export default function EditContractForm({onCancel, data}) {
                             value={formik.values.price}
                             disabled="disabled"
                         />
-                        <a onClick={calculatePrice()} href={"#"} className={styles.linkie}></a>
+                        <a onClick={calculatePrice()} href={"#"} className={styles.linkie}/>
                     </div>
                     {formik.errors.price ? <div className={styles.error}>{formik.errors.price}</div> : null}
 

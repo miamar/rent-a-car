@@ -4,8 +4,10 @@ import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditCollabForm from "./forms/edit-collab";
 import Link from "next/link";
+import Navigation from "./navigation";
+import {ProtectRoute} from "./router";
 
-export default function Collab(props) {
+const Collab = (props) => {
     const [editedCollab, setEditedCollab] = useState(null)
     const [collabs, setCollabs] = useState(props.data)
 
@@ -32,8 +34,8 @@ export default function Collab(props) {
                     <td className={styles.tabletd}>{name}</td>
                     <td className={styles.tabletd}><a href={website} rel="noopener noreferrer" target="_blank">{website}</a></td>
                     <td className={styles.tabletd}>{description}</td>
-                    <td><button onClick={() => setEditedCollab(collab)}>Uredi</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
+                    <td><button className={styles.buttonTable} onClick={() => setEditedCollab(collab)}>Uredi</button></td>
+                    <td><button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -52,10 +54,13 @@ export default function Collab(props) {
             </Head>
 
             <main className={styles.main}>
+
+                <Navigation/>
+
                 <h1 className="">Vanjska suradnja</h1>
 
                 <div>
-                    <table>
+                    <table className={styles.tableall}>
                         <tbody>
                         <tr >
                             <td className={styles.tablefirst}>vrsta</td>
@@ -69,8 +74,8 @@ export default function Collab(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedCollab('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}>
+                    <button onClick={() => setEditedCollab('w')} className={styles.buttonMain}>Dodaj novo</button>
+                    <button className={styles.buttonMain}>
                         <Link href="/home">
                             <a>Početna</a>
                         </Link>
@@ -83,6 +88,8 @@ export default function Collab(props) {
         </div>
     )
 }
+
+export default ProtectRoute(Collab)
 
 export async function getServerSideProps() {
     const prisma = new PrismaClient()

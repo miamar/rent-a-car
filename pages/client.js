@@ -4,8 +4,10 @@ import Link from 'next/link'
 import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditClientForm from "./forms/edit-client";
+import {ProtectRoute} from "./router";
+import Navigation from "./navigation";
 
-export default function Client(props) {
+const Client = (props) => {
     const [editedClient, setEditedClient] = useState(null)
     const [clients, setClients] = useState(props.data)
 
@@ -34,8 +36,8 @@ export default function Client(props) {
                     <td className={styles.tabletd}>{phoneNumber}</td>
                     <td className={styles.tabletd}>{oib}</td>
                     <td className={styles.tabletd}>{dateOfBirth.substr(0,10)}</td>
-                    <td><button onClick={() => setEditedClient(client)}>Uredi</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
+                    <td><button className={styles.buttonTable} onClick={() => setEditedClient(client)}>Uredi</button></td>
+                    <td><button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -54,10 +56,13 @@ export default function Client(props) {
             </Head>
 
             <main className={styles.main}>
+
+                <Navigation/>
+
                 <h1 className="">Klijenti</h1>
 
                 <div>
-                    <table>
+                    <table className={styles.tableall}>
                         <tbody>
                         <tr >
                             <td className={styles.tablefirst}>ime</td>
@@ -74,8 +79,8 @@ export default function Client(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedClient('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}>
+                    <button onClick={() => setEditedClient('w')} className={styles.buttonMain}>Dodaj novo</button>
+                    <button className={styles.buttonMain}>
                         <Link href="/home">
                             <a>Početna</a>
                         </Link>
@@ -88,6 +93,8 @@ export default function Client(props) {
         </div>
     )
 }
+
+export default ProtectRoute(Client)
 
 export async function getServerSideProps() {
     const prisma = new PrismaClient()

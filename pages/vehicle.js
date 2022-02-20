@@ -4,8 +4,10 @@ import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditVehicleForm from "./forms/edit-vehicle";
 import Link from "next/link";
+import {ProtectRoute} from "./router";
+import Navigation from "./navigation";
 
-export default function Vehicle(props) {
+const Vehicle = (props) => {
     const [editedVehicle, setEditedVehicle] = useState(null)
     const [vehicles, setVehicles] = useState(props.data)
 
@@ -38,8 +40,8 @@ export default function Vehicle(props) {
                     <td className={styles.tabletd}>{fuel}</td>
                     <td className={styles.tabletd}>{price} kn</td>
                     <td className={styles.tabletd}>{rented.toString()}</td>
-                    <td><button onClick={() => setEditedVehicle(vehicle)}>Uredi</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
+                    <td><button className={styles.buttonTable} onClick={() => setEditedVehicle(vehicle)}>Uredi</button></td>
+                    <td><button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -58,10 +60,13 @@ export default function Vehicle(props) {
             </Head>
 
             <main className={styles.main}>
+
+                <Navigation/>
+
                 <h1 className="">Vozila</h1>
 
                 <div>
-                    <table>
+                    <table className={styles.tableall}>
                         <tbody>
                         <tr>
                             <td className={styles.tablefirst}>registracija</td>
@@ -81,9 +86,9 @@ export default function Vehicle(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedVehicle('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}>
-                        <Link href="/home">
+                    <button onClick={() => setEditedVehicle('w')} className={styles.buttonMain}>Dodaj novo</button>
+                    <button className={styles.buttonMain}>
+                        <Link href="/">
                             <a>Početna</a>
                         </Link>
                     </button>
@@ -95,6 +100,8 @@ export default function Vehicle(props) {
         </div>
     )
 }
+
+export default ProtectRoute(Vehicle)
 
 export async function getServerSideProps() {
     const prisma = new PrismaClient()

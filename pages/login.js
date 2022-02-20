@@ -4,17 +4,10 @@ import React from 'react';
 import Link from 'next/link'
 import { useFormik } from 'formik';
 import {PrismaClient} from "@prisma/client";
-import useAuth from "./api/auth/login";
+import useAuth from "../context/auth/login";
 
 export default function LoginForm(props) {
-    const {login} = useAuth();
-
-    function isAuthValid(values) {
-
-        for (let i=0; i<props.data.length; i++) {
-            return values.email === props.data[i].email && values.password === props.data[i].password;
-        }
-    }
+    const {login} = useAuth()
 
     const validate = values => {
         const errors = {};
@@ -42,11 +35,10 @@ export default function LoginForm(props) {
         },
         validate,
         onSubmit: values => {
-            if (isAuthValid(values)){
-                login(values)
-            }
+            login(values)
         },
     });
+
     return (
         <div className={styles.container}>
             <Head>
@@ -86,20 +78,12 @@ export default function LoginForm(props) {
                     </div>
                     {formik.errors.password ? <div className={styles.error}>{formik.errors.password}</div> : null}
 
-                    <button className={styles.button} type="submit">Prijava</button>
-                    <button className={styles.button}>
+                    <button className={styles.buttonMain} type="submit">Prijava</button>
+                    <button className={styles.buttonMain}>
                         <Link href="/home">
                             <a>Odustani</a>
                         </Link>
                     </button>
-
-                    <p><a href={"#"}>Zaboravili ste lozinku?</a></p>
-
-                    <p>
-                        <Link href="/worker">
-                            <a>Nemate račun? Registrirajte se.</a>
-                        </Link>
-                    </p>
 
                 </form>
             </main>

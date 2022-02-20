@@ -4,8 +4,10 @@ import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditWorkerForm from "./forms/edit-worker";
 import Link from "next/link";
+import Navigation from "./navigation";
+import {ProtectRoute} from "./router";
 
-export default function Worker(props) {
+const Worker = (props) => {
     const [editedWorker, setEditedWorker] = useState(null)
     const [workers, setWorkers] = useState(props.data)
 
@@ -35,9 +37,9 @@ export default function Worker(props) {
                     <td className={styles.tabletd}>{address}</td>
                     <td className={styles.tabletd}>{dateOfBirth.substr(0,10)}</td>
                     <td className={styles.tabletd}>{phoneNumber}</td>
-                    <td className={styles.tabletd}>{pay}</td>
-                    <td><button onClick={() => setEditedWorker(worker)}>Uredi</button></td>
-                    <td><button onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
+                    <td className={styles.tabletd}>{pay} kn</td>
+                    <td><button className={styles.buttonTable} onClick={() => setEditedWorker(worker)}>Uredi</button></td>
+                    <td><button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
                 </tr>
             )
         })
@@ -56,10 +58,13 @@ export default function Worker(props) {
             </Head>
 
             <main className={styles.main}>
+
+                <Navigation/>
+
                 <h1 className="">Zaposlenici</h1>
 
                 <div>
-                    <table>
+                    <table className={styles.tableall}>
                         <tbody>
                         <tr >
                             <td className={styles.tablefirst}>ime</td>
@@ -77,8 +82,8 @@ export default function Worker(props) {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedWorker('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}>
+                    <button onClick={() => setEditedWorker('w')} className={styles.buttonMain}>Dodaj novo</button>
+                    <button className={styles.buttonMain}>
                         <Link href="/home">
                             <a>Početna</a>
                         </Link>
@@ -91,6 +96,8 @@ export default function Worker(props) {
         </div>
     )
 }
+
+export default ProtectRoute(Worker)
 
 export async function getServerSideProps() {
     const prisma = new PrismaClient()
