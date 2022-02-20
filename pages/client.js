@@ -4,7 +4,7 @@ import Link from 'next/link'
 import {PrismaClient} from "@prisma/client";
 import {useState} from "react";
 import EditClientForm from "./forms/edit-client";
-import {ProtectRoute} from "./router";
+import {ProtectRoute} from "../components/router";
 import Navigation from "./navigation";
 
 const Client = (props) => {

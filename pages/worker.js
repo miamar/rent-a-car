@@ -5,7 +5,7 @@ import {useState} from "react";
 import EditWorkerForm from "./forms/edit-worker";
 import Link from "next/link";
 import Navigation from "./navigation";
-import {ProtectRoute} from "./router";
+import {ProtectRoute} from "../components/router";
 
 const Worker = (props) => {
     const [editedWorker, setEditedWorker] = useState(null)

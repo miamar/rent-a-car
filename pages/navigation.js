@@ -7,7 +7,7 @@ export default function Navigation(props) {
     const {logout} = useAuth()
 
     const formik = useFormik({
-        onSubmit: values => {
+        onSubmit: () => {
             logout()
         },
     });
