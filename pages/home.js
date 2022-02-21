@@ -5,6 +5,7 @@ import { PrismaClient } from '@prisma/client'
 import {ProtectRoute} from "../components/router";
 import {useFormik} from "formik";
 import useAuth from "../context/auth/login";
+import Navigation from "./navigation";
 
 const Home = (props) => {
     const {logout} = useAuth()
@@ -22,12 +23,9 @@ const Home = (props) => {
                 <meta name="description" content="Rent a car" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
             <main className={styles.main}>
 
-                <form onSubmit={formik.handleSubmit}>
-                    <button type="submit" className={styles.button}>Odjava</button>
-                </form>
+                <Navigation/>
 
                 <h1 className={styles.title}>
                     Rent a car Vertigo
