@@ -73,16 +73,16 @@ export default function EditVehicleForm({onCancel, data}) {
     // be called when the form is submitted
     const formik = useFormik({
         initialValues: {
-            id: selected.id ? selected.id : '',
-            plates: selected.plates ? selected.plates : '',
-            make: selected.make ? selected.make : '',
-            model: selected.model ? selected.model : '',
-            year: selected.year ? selected.year : '',
-            seats: selected.seats ? selected.seats : '',
-            consumption: selected.consumption ? selected.consumption : '',
-            transmission: selected.transmission ? selected.transmission : '',
-            fuel: selected.fuel ? selected.fuel : '',
-            price: selected.price ? selected.price : '',
+            id: selected && selected.id ? selected.id : '',
+            plates: selected && selected.plates ? selected.plates : '',
+            make: selected && selected.make ? selected.make : '',
+            model: selected && selected.model ? selected.model : '',
+            year: selected && selected.year ? selected.year : '',
+            seats: selected && selected.seats ? selected.seats : '',
+            consumption: selected && selected.consumption ? selected.consumption : '',
+            transmission: selected && selected.transmission ? selected.transmission : '',
+            fuel: selected && selected.fuel ? selected.fuel : '',
+            price: selected && selected.price ? selected.price : '',
         },
         validate,
         onSubmit: values => {

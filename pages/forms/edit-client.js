@@ -69,14 +69,14 @@ export default function EditClientForm({onCancel, data}) {
     // be called when the form is submitted
     const formik = useFormik({
         initialValues: {
-            id: selected.id ? selected.id : '',
-            firstName: selected.firstName ? selected.firstName : '',
-            lastName: selected.lastName ? selected.lastName : '',
-            oib: selected.oib ? selected.oib : '',
-            address: selected.address ? selected.address : '',
-            email: selected.email ? selected.email : '',
-            phoneNumber: selected.phoneNumber ? selected.phoneNumber : '',
-            dateOfBirth: selected.dateOfBirth ? selected.dateOfBirth.substr(0,10) : ''
+            id: selected && selected.id ? selected.id : '',
+            firstName: selected && selected.firstName ? selected.firstName : '',
+            lastName: selected && selected.lastName ? selected.lastName : '',
+            oib: selected && selected.oib ? selected.oib : '',
+            address: selected && selected.address ? selected.address : '',
+            email: selected && selected.email ? selected.email : '',
+            phoneNumber: selected && selected.phoneNumber ? selected.phoneNumber : '',
+            dateOfBirth: selected && selected.dateOfBirth ? selected.dateOfBirth.substr(0,10) : ''
         },
         validate,
         onSubmit: values => {

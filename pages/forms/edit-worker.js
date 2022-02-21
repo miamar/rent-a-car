@@ -85,18 +85,18 @@ export default function EditWorkerForm({onCancel, data}) {
     // be called when the form is submitted
     const formik = useFormik({
         initialValues: {
-            id: selected.id ? selected.id : '',
-            role: selected.role ? selected.role : '',
-            username: selected.username ? selected.username : '',
-            email: selected.email ? selected.email : '',
-            password: selected.password ? selected.password : '',
-            firstName: selected.firstName ? selected.firstName : '',
-            lastName: selected.lastName ? selected.lastName : '',
-            oib: selected.oib ? selected.oib : '',
-            address: selected.address ? selected.address : '',
-            phoneNumber: selected.phoneNumber ? selected.phoneNumber : '',
-            dateOfBirth: selected.dateOfBirth ? selected.dateOfBirth.substr(0,10) : '',
-            pay: selected.pay ? selected.pay : ''
+            id: selected && selected.id ? selected.id : '',
+            role: selected && selected.role ? selected.role : '',
+            username: selected && selected.username ? selected.username : '',
+            email: selected && selected.email ? selected.email : '',
+            password: selected && selected.password ? selected.password : '',
+            firstName: selected && selected.firstName ? selected.firstName : '',
+            lastName: selected && selected.lastName ? selected.lastName : '',
+            oib: selected && selected.oib ? selected.oib : '',
+            address: selected && selected.address ? selected.address : '',
+            phoneNumber: selected && selected.phoneNumber ? selected.phoneNumber : '',
+            dateOfBirth: selected && selected.dateOfBirth ? selected.dateOfBirth.substr(0,10) : '',
+            pay: selected && selected.pay ? selected.pay : ''
         },
         validate,
         onSubmit: values => {

@@ -12,7 +12,7 @@ const Contract = (props) => {
     const [editedContract, setEditedContract] = useState(null)
     const [contracts, setContracts] = useState(props.data)
 
-    let dataToSend = {editedContract: editedContract, clients: props.dataC, vehicles: props.dataV, workers: props.dataW}
+    let dataToSend = {validated: editedContract, clients: props.dataC, vehicles: props.dataV, workers: props.dataW}
 
     const deleteFromDatabase = async (values) => {
         const res = await fetch('api/delete-contract', {

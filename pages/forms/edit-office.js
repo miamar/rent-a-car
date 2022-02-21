@@ -49,10 +49,10 @@ export default function EditOfficeForm({onCancel, data}) {
     // be called when the form is submitted
     const formik = useFormik({
         initialValues: {
-            id: selected.id ? selected.id : '',
-            address: selected.address ? selected.address : '',
-            phoneNumber: selected.phoneNumber ? selected.phoneNumber : '',
-            workHours: selected.workHours ? selected.workHours : ''
+            id: selected && selected.id ? selected.id : '',
+            address: selected && selected.address ? selected.address : '',
+            phoneNumber: selected && selected.phoneNumber ? selected.phoneNumber : '',
+            workHours: selected && selected.workHours ? selected.workHours : ''
         },
         validate,
         onSubmit: values => {
