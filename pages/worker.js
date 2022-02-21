@@ -80,11 +80,11 @@ const Worker = (props) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className={styles.titles}>
+            <main className={styles.main}>
 
                 <Navigation/>
 
-                <h1 className={styles.title}>Zaposlenici</h1>
+                <h1 className={styles.titles}>Zaposlenici</h1>
 
                 <div>
                     <table className={styles.tableall}>

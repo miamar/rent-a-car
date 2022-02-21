@@ -44,7 +44,9 @@ const Vehicle = (props) => {
                         <td className={styles.tabletd}>{transmission}</td>
                         <td className={styles.tabletd}>{fuel}</td>
                         <td className={styles.tabletd}>{price} kn</td>
-                        <td className={styles.tabletd}>{rented.toString()}</td>
+                        <td className={styles.tabletd}>
+                            {rented === true ? "da" : "ne"}
+                        </td>
                         <td>
                             <button className={styles.buttonTable} onClick={() => setEditedVehicle(vehicle)}>Uredi
                             </button>

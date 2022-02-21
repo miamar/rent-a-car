@@ -48,7 +48,7 @@ export default function LoginForm(props) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Prijava u sustav</h1>
+                <h1 className={styles.titles}>Prijava u sustav</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 
