@@ -108,6 +108,7 @@ export default function EditContractForm({onCancel, data}) {
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
+                formik.values.price = price
                 saveChanges(values);
                 //modifyVehicle(values);
                 if(confirm("Uspješno ste uredili zapis o ugovoru!")){
@@ -115,6 +116,7 @@ export default function EditContractForm({onCancel, data}) {
                 }
             } else {
                 createNewEntry(values);
+                formik.values.price = price
                 //modifyVehicle(values);
                 if(confirm("Uspješno ste dodali novi ugovor!")){
                     window.location.reload();
@@ -150,8 +152,8 @@ export default function EditContractForm({onCancel, data}) {
             }
         }
 
-        let dateUntil = new Date(formik.values.rentedUntil).getTime()
         let dateFrom = new Date(formik.values.rentedFrom).getTime()
+        let dateUntil = new Date(formik.values.rentedUntil).getTime()
         let diff = dateUntil - dateFrom
         let diffInH = diff  / 3600000
         let diffInDays = diffInH / 24
@@ -326,7 +328,7 @@ export default function EditContractForm({onCancel, data}) {
                             name="price"
                             type="text"
                             disabled={true}
-                            value={formik.values.price}
+                            value={price}
                         />
                     </div>
                     {formik.errors.price ? <div className={styles.error}>{formik.errors.price}</div> : null}
