@@ -100,8 +100,8 @@ export default function EditContractForm({onCancel, data}) {
             workerId: selected && selected.workerId ? selected.workerId : '',
             rentedFrom: selected && selected.rentedFrom ? selected.rentedFrom.substr(0,10) : '',
             rentedUntil: selected && selected.rentedUntil ? selected.rentedUntil.substr(0,10) : '',
-            openReturn: selected && selected.openReturn,
-            insurance: selected && selected.insurance,
+            openReturn: selected && selected.openReturn ? selected.openReturn : false,
+            insurance: selected && selected.insurance ? selected.insurance : false,
             price: selected && selected.price ? selected.price : 0
         },
         validate,
