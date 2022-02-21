@@ -25,7 +25,7 @@ export default function EditVehicleForm({onCancel, data}) {
                 "Content-Type": "application/json"
             }
         });
-        const data = await res.json();
+        return await res.json()
     };
 
     const validate = values => {
@@ -88,10 +88,12 @@ export default function EditVehicleForm({onCancel, data}) {
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
-                saveChanges(values);
-                if(confirm("Uspješno ste uredili zapis o vozilu!")){
-                    window.location.reload();
-                }
+                saveChanges(values)
+                    .then(res => {
+                    console.log("uspjeh", res)
+                })
+                    .catch(e => console.log(e))
+
             } else {
                 createNewEntry(values);
                 if(confirm("Uspješno ste dodali novo vozilo!")){

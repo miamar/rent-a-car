@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         pay
     } = req.body
 
-    await prisma.worker.create({
+    await prisma.worker.update({
         where: {
             id: id,
         },

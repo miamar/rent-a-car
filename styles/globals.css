@@ -14,3 +14,29 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.error--container {
+  position: fixed;
+  width: 320px;
+  border: 1px solid;
+  bottom: 120px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  transform: translateX(200%);
+  transition: all 0.4s;
+}
+
+.error--container.visible {
+  transform: translateX(0);
+}
+
+.error--container svg {
+  width: 20px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

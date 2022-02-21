@@ -2,19 +2,27 @@ import {PrismaClient} from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export default async function handler(req, res) {
-    const {
-        address,
-        phoneNumber,
-        workHours
-    } = req.body
+const handler = async (req, res) => {
 
-    const message = await prisma.office.create({
-        data: {
-            address: address,
-            phoneNumber: phoneNumber,
-            workHours: workHours
-        }
-    })
-    res.json(message)
+    if (req.method === 'POST') {
+        const {
+            address,
+            phoneNumber,
+            workHours
+        } = req.body
+
+        const newOffice = await prisma.office.create({
+            data: {
+                address: address,
+                phoneNumber: phoneNumber,
+                workHours: workHours
+            }
+        })
+
+        return res.status(200).json(newOffice);
+    }
+
+    res.end();
 }
+
+export default handler;

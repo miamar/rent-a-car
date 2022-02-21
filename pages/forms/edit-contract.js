@@ -3,6 +3,7 @@ import Head from "next/head";
 import React, {useEffect, useState} from 'react';
 import { useFormik } from 'formik';
 import {PrismaClient} from "@prisma/client";
+import useError from "../../context/error/error";
 
 export default function EditContractForm({onCancel, data}) {
     const [selected, setSelected] = useState(null)
@@ -10,6 +11,8 @@ export default function EditContractForm({onCancel, data}) {
     const [vehicles, setVehicles] = useState(null)
     const [workers, setWorkers] = useState(null)
     const [price, setPrice] = useState(0)
+
+    const {setErrorMessage, setErrorVisible} = useError();
 
     useEffect(() => {
         if (data) {
@@ -21,25 +24,31 @@ export default function EditContractForm({onCancel, data}) {
     }, [data])
 
     const createNewEntry = async (values) => {
-        const res = await fetch('/api/new-contract', {
-            method: 'POST',
-            body: JSON.stringify(values),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        const data = await res.json();
+        return new Promise(((resolve, reject) => {
+            fetch('/api/new-contract', {
+                method: 'POST',
+                body: JSON.stringify({...values, price: price}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.json())
+                .then(data => resolve(data))
+                .catch(e => reject(e))
+        }))
     };
 
     const saveChanges = async (values) => {
-        const res = await fetch('/api/edit-contract', {
-            method: 'PUT',
-            body: JSON.stringify(values),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        const data = await res.json();
+        return new Promise(((resolve, reject) => {
+            fetch('/api/edit-contract', {
+                method: 'PUT',
+                body: JSON.stringify({...values, price: price}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.json())
+                .then(data => resolve(data))
+                .catch(e => reject(e))
+        }))
     };
 
     const modifyVehicle = async (values) => {
@@ -109,18 +118,21 @@ export default function EditContractForm({onCancel, data}) {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
                 formik.values.price = price
-                saveChanges(values);
-                //modifyVehicle(values);
-                if(confirm("Uspješno ste uredili zapis o ugovoru!")){
-                    window.location.reload();
-                }
+                saveChanges(values).then(r => {
+                    setErrorMessage("Uspjesno napravljeno")
+                    setErrorVisible(true)
+                }).catch(e => {
+                    setErrorMessage(e.message)
+                    setErrorVisible(true)
+                });
             } else {
-                createNewEntry(values);
-                formik.values.price = price
-                //modifyVehicle(values);
-                if(confirm("Uspješno ste dodali novi ugovor!")){
-                    window.location.reload();
-                }
+                createNewEntry(values).then(r => {
+                    setErrorMessage("Uspjesno napravljeno")
+                    setErrorVisible(true)
+                }).catch(e => {
+                    setErrorMessage(e.message)
+                    setErrorVisible(true)
+                });
             }
         },
     });

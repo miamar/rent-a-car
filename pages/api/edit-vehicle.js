@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         price
     } = req.body
 
-    await prisma.vehicle.update({
+    const message = await prisma.vehicle.update({
         where: {
             id: id,
         },
@@ -24,13 +24,15 @@ export default async function handler(req, res) {
             plates: plates,
             make: make,
             model: model,
-            year: year ? parseFloat(year) : 0,
-            seats: seats ? parseFloat(seats) : 0,
+            year: year ? parseInt(year) : 0,
+            seats: seats ? parseInt(seats) : 0,
             consumption: consumption ? parseFloat(consumption) : 0,
             transmission: transmission,
             fuel: fuel,
             rented: false,
             price: price ? parseFloat(price) : 0
         },
-    })
+    }).catch(e => console.log(e))
+    res.json(message)
+
 }
