@@ -10,6 +10,10 @@ import Navigation from "./navigation";
 const Client = (props) => {
     const [editedClient, setEditedClient] = useState(null)
     const [clients, setClients] = useState(props.data)
+    const [pageNumber, setPageNumber] = useState(1)
+
+    const numberOfOffices = props.data.length
+    const numberOfPages = Math.ceil(numberOfOffices / 5)
 
     const deleteFromDatabase = async (values) => {
         const res = await fetch('api/delete-client', {
@@ -24,21 +28,40 @@ const Client = (props) => {
         setClients(clients.filter(client => client.id !== data.id));
     };
 
-    function renderTableData() {
+    function renderTableData(pageNumber) {
         return clients.map((client, index) => {
             const { id, firstName, lastName, email, address, phoneNumber, oib, dateOfBirth } = client
+            if (index >= pageNumber*5-5 && index <= pageNumber*5-1) {
+                return (
+                    <tr key={id}>
+                        <td className={styles.tabletd}>{firstName}</td>
+                        <td className={styles.tabletd}>{lastName}</td>
+                        <td className={styles.tabletd}>{email}</td>
+                        <td className={styles.tabletd}>{address}</td>
+                        <td className={styles.tabletd}>{phoneNumber}</td>
+                        <td className={styles.tabletd}>{oib}</td>
+                        <td className={styles.tabletd}>{dateOfBirth.substr(0, 10)}</td>
+                        <td>
+                            <button className={styles.buttonTable} onClick={() => setEditedClient(client)}>Uredi
+                            </button>
+                        </td>
+                        <td>
+                            <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši
+                            </button>
+                        </td>
+                    </tr>
+                )
+            }
+        })
+    }
+
+    function renderPageNumbers(numberOfPages) {
+        let arrayPages = [...Array(numberOfPages+1).keys()]
+        arrayPages.shift()
+
+        return arrayPages.map((page) => {
             return (
-                <tr key={id}>
-                    <td className={styles.tabletd}>{firstName}</td>
-                    <td className={styles.tabletd}>{lastName}</td>
-                    <td className={styles.tabletd}>{email}</td>
-                    <td className={styles.tabletd}>{address}</td>
-                    <td className={styles.tabletd}>{phoneNumber}</td>
-                    <td className={styles.tabletd}>{oib}</td>
-                    <td className={styles.tabletd}>{dateOfBirth.substr(0,10)}</td>
-                    <td><button className={styles.buttonTable} onClick={() => setEditedClient(client)}>Uredi</button></td>
-                    <td><button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
-                </tr>
+                <a key={page} onClick={() => setPageNumber(page)} href={"#"} className={styles.linkPageView}>{page}</a>
             )
         })
     }
@@ -59,7 +82,7 @@ const Client = (props) => {
 
                 <Navigation/>
 
-                <h1 className="">Klijenti</h1>
+                <h1 className={styles.titles}>Klijenti</h1>
 
                 <div>
                     <table className={styles.tableall}>
@@ -73,18 +96,23 @@ const Client = (props) => {
                             <td className={styles.tablefirst}>oib</td>
                             <td className={styles.tablefirst}>datum rođenja</td>
                         </tr>
-                        {renderTableData()}
+                        {renderTableData(pageNumber)}
                         </tbody>
                     </table>
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedClient('w')} className={styles.buttonMain}>Dodaj novo</button>
-                    <button className={styles.buttonMain}>
+                    <button onClick={() => setEditedClient('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}>
                         <Link href="/home">
                             <a>Početna</a>
                         </Link>
                     </button>
+                </div>
+
+                <div className={styles.pageView}>
+                    <a className={styles.linkPageView}>Broj stranice:</a>
+                    {renderPageNumbers(numberOfPages)}
                 </div>
 
 

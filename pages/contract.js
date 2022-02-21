@@ -8,9 +8,12 @@ import Navigation from "./navigation";
 import {ProtectRoute} from "../components/router";
 
 const Contract = (props) => {
-
     const [editedContract, setEditedContract] = useState(null)
     const [contracts, setContracts] = useState(props.data)
+    const [pageNumber, setPageNumber] = useState(1)
+
+    const numberOfOffices = props.data.length
+    const numberOfPages = Math.ceil(numberOfOffices / 5)
 
     let dataToSend = {validated: editedContract, clients: props.dataC, vehicles: props.dataV, workers: props.dataW}
 
@@ -27,23 +30,46 @@ const Contract = (props) => {
         setContracts(contracts.filter(contract => contract.id !== data.id));
     };
 
-    function renderTableData() {
+    function renderTableData(pageNumber) {
 
-        return contracts.map((contract) => {
+        return contracts.map((contract, index) => {
             const { id, rentedFrom, rentedUntil, client, vehicle, worker, price, openReturn, insurance } = contract
+            if (index >= pageNumber*5-5 && index <= pageNumber*5-1) {
+                return (
+                    <tr key={id}>
+                        <td className={styles.tabletd}>{client.firstName} {client.lastName}</td>
+                        <td className={styles.tabletd}>{vehicle.make} {vehicle.model}</td>
+                        <td className={styles.tabletd}>{worker.firstName} {worker.lastName}</td>
+                        <td className={styles.tabletd}>{rentedFrom.substr(0, 10)}</td>
+                        <td className={styles.tabletd}>{rentedUntil.substr(0, 10)}</td>
+                        <td className={styles.tabletd}>{price} kn</td>
+                        <td className={styles.tabletd}>
+                            {insurance === true ? "da" : "ne"}
+                        </td>
+                        <td className={styles.tabletd}>
+                            {openReturn === true ? "da" : "ne"}
+                        </td>
+                        <td>
+                            <button className={styles.buttonTable} onClick={() => setEditedContract(contract)}>Uredi
+                            </button>
+                        </td>
+                        <td>
+                            <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši
+                            </button>
+                        </td>
+                    </tr>
+                )
+            }
+        })
+    }
+
+    function renderPageNumbers(numberOfPages) {
+        let arrayPages = [...Array(numberOfPages+1).keys()]
+        arrayPages.shift()
+
+        return arrayPages.map((page) => {
             return (
-                <tr key={id}>
-                    <td className={styles.tabletd}>{client.firstName} {client.lastName}</td>
-                    <td className={styles.tabletd}>{vehicle.make} {vehicle.model}</td>
-                    <td className={styles.tabletd}>{worker.firstName} {worker.lastName}</td>
-                    <td className={styles.tabletd}>{rentedFrom.substr(0,10)}</td>
-                    <td className={styles.tabletd}>{rentedUntil.substr(0,10)}</td>
-                    <td className={styles.tabletd}>{price} kn</td>
-                    <td className={styles.tabletd}>{insurance.toString()}</td>
-                    <td className={styles.tabletd}>{openReturn.toString()}</td>
-                    <td><button className={styles.buttonTable} onClick={() => setEditedContract(contract)}>Uredi</button></td>
-                    <td><button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
-                </tr>
+                <a key={page} onClick={() => setPageNumber(page)} href={"#"} className={styles.linkPageView}>{page}</a>
             )
         })
     }
@@ -64,7 +90,7 @@ const Contract = (props) => {
 
                 <Navigation/>
 
-                <h1 className="">Ugovori</h1>
+                <h1 className={styles.titles}>Ugovori</h1>
 
                 <div>
                     <table className={styles.tableall}>
@@ -79,18 +105,23 @@ const Contract = (props) => {
                             <td className={styles.tablefirst}>dodatno osiguranje</td>
                             <td className={styles.tablefirst}>Povrat izvan poslovnice</td>
                         </tr>
-                        {renderTableData()}
+                        {renderTableData(pageNumber)}
                         </tbody>
                     </table>
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedContract('w')} className={styles.buttonMain}>Dodaj novo</button>
-                    <button className={styles.buttonMain}>
+                    <button onClick={() => setEditedContract('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}>
                         <Link href="/home">
                             <a>Početna</a>
                         </Link>
                     </button>
+                </div>
+
+                <div className={styles.pageView}>
+                    <a className={styles.linkPageView}>Broj stranice:</a>
+                    {renderPageNumbers(numberOfPages)}
                 </div>
 
 

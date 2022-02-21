@@ -10,6 +10,10 @@ import Navigation from "./navigation";
 const Vehicle = (props) => {
     const [editedVehicle, setEditedVehicle] = useState(null)
     const [vehicles, setVehicles] = useState(props.data)
+    const [pageNumber, setPageNumber] = useState(1)
+
+    const numberOfOffices = props.data.length
+    const numberOfPages = Math.ceil(numberOfOffices / 5)
 
     const deleteFromDatabase = async (values) => {
         const res = await fetch('api/delete-vehicle', {
@@ -24,25 +28,44 @@ const Vehicle = (props) => {
         setVehicles(vehicles.filter(vehicle => vehicle.id !== data.id));
     };
 
-    function renderTableData() {
+    function renderTableData(pageNumber) {
 
         return vehicles.map((vehicle, index) => {
             const { id, plates, make, model, year, seats, consumption, transmission, fuel, price, rented } = vehicle
+            if (index >= pageNumber*5-5 && index <= pageNumber*5-1) {
+                return (
+                    <tr key={id}>
+                        <td className={styles.tabletd}>{plates}</td>
+                        <td className={styles.tabletd}>{make}</td>
+                        <td className={styles.tabletd}>{model}</td>
+                        <td className={styles.tabletd}>{year}</td>
+                        <td className={styles.tabletd}>{seats}</td>
+                        <td className={styles.tabletd}>{consumption} L/km</td>
+                        <td className={styles.tabletd}>{transmission}</td>
+                        <td className={styles.tabletd}>{fuel}</td>
+                        <td className={styles.tabletd}>{price} kn</td>
+                        <td className={styles.tabletd}>{rented.toString()}</td>
+                        <td>
+                            <button className={styles.buttonTable} onClick={() => setEditedVehicle(vehicle)}>Uredi
+                            </button>
+                        </td>
+                        <td>
+                            <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši
+                            </button>
+                        </td>
+                    </tr>
+                )
+            }
+        })
+    }
+
+    function renderPageNumbers(numberOfPages) {
+        let arrayPages = [...Array(numberOfPages+1).keys()]
+        arrayPages.shift()
+
+        return arrayPages.map((page) => {
             return (
-                <tr key={id}>
-                    <td className={styles.tabletd}>{plates}</td>
-                    <td className={styles.tabletd}>{make}</td>
-                    <td className={styles.tabletd}>{model}</td>
-                    <td className={styles.tabletd}>{year}</td>
-                    <td className={styles.tabletd}>{seats}</td>
-                    <td className={styles.tabletd}>{consumption} L/km</td>
-                    <td className={styles.tabletd}>{transmission}</td>
-                    <td className={styles.tabletd}>{fuel}</td>
-                    <td className={styles.tabletd}>{price} kn</td>
-                    <td className={styles.tabletd}>{rented.toString()}</td>
-                    <td><button className={styles.buttonTable} onClick={() => setEditedVehicle(vehicle)}>Uredi</button></td>
-                    <td><button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
-                </tr>
+                <a key={page} onClick={() => setPageNumber(page)} href={"#"} className={styles.linkPageView}>{page}</a>
             )
         })
     }
@@ -63,7 +86,7 @@ const Vehicle = (props) => {
 
                 <Navigation/>
 
-                <h1 className="">Vozila</h1>
+                <h1 className={styles.titles}>Vozila</h1>
 
                 <div>
                     <table className={styles.tableall}>
@@ -80,7 +103,7 @@ const Vehicle = (props) => {
                             <td className={styles.tablefirst}>cijena</td>
                             <td className={styles.tablefirst}>iznajmljen</td>
                         </tr>
-                        {renderTableData()}
+                        {renderTableData(pageNumber)}
                         </tbody>
                     </table>
                 </div>
@@ -92,6 +115,11 @@ const Vehicle = (props) => {
                             <a>Početna</a>
                         </Link>
                     </button>
+                </div>
+
+                <div className={styles.pageView}>
+                    <a className={styles.linkPageView}>Broj stranice:</a>
+                    {renderPageNumbers(numberOfPages)}
                 </div>
 
 

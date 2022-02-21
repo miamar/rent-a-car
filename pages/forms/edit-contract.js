@@ -80,6 +80,7 @@ export default function EditContractForm({onCancel, data}) {
     // Pass the useFormik() hook initial form values and a submit function that will
     // be called when the form is submitted
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
             id: selected && selected.id ? selected.id : '',
             clientId: selected && selected.clientId ? selected.clientId : '',
@@ -87,9 +88,9 @@ export default function EditContractForm({onCancel, data}) {
             workerId: selected && selected.workerId ? selected.workerId : '',
             rentedFrom: selected && selected.rentedFrom ? selected.rentedFrom.substr(0,10) : '',
             rentedUntil: selected && selected.rentedUntil ? selected.rentedUntil.substr(0,10) : '',
-            openReturn: selected && selected.openReturn ? selected.openReturn : false,
-            insurance: selected && selected.insurance ? selected.insurance : false,
-            price: selected && selected.price ? selected.id : 0
+            openReturn: selected && selected.openReturn,
+            insurance: selected && selected.insurance,
+            price: selected && selected.price ? selected.price : 0
         },
         validate,
         onSubmit: values => {
@@ -116,7 +117,11 @@ export default function EditContractForm({onCancel, data}) {
         return yyyy + "-" + mm + "-" + dd;
     };
 
-    const calculatePrice = () => {
+    function calculatePrice() {
+        console.log(formik.values.price)
+        if(!vehicles) {
+            return
+        }
         let vehiclePricePerDay = 0
 
         for (let i=0; i<vehicles.length; i++) {
@@ -124,7 +129,6 @@ export default function EditContractForm({onCancel, data}) {
                 vehiclePricePerDay = vehicles[i].price
             }
         }
-        console.log(vehiclePricePerDay)
 
         let dateUntil = new Date(formik.values.rentedUntil).getTime()
         let dateFrom = new Date(formik.values.rentedFrom).getTime()
@@ -180,7 +184,6 @@ export default function EditContractForm({onCancel, data}) {
         })
     }
 
-
     return (
         <div className={styles.container}>
             <Head>
@@ -190,7 +193,7 @@ export default function EditContractForm({onCancel, data}) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Podaci ugovora</h1>
+                <h1 className={styles.titles}>Podaci ugovora</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 
@@ -269,12 +272,12 @@ export default function EditContractForm({onCancel, data}) {
                     <div className={styles.forms}>
                         <label htmlFor="openReturn">Povrat izvan poslovnice</label>
                         <input
-                            className={styles.input}
+                            className={styles.formCheckbox}
                             id="openReturn"
                             name="openReturn"
                             type="checkbox"
                             onChange={formik.handleChange}
-                            value={formik.values.openReturn}
+                            checked={formik.values.openReturn}
                         />
                     </div>
                     {formik.errors.openReturn ? <div className={styles.error}>{formik.errors.openReturn}</div> : null}
@@ -282,12 +285,12 @@ export default function EditContractForm({onCancel, data}) {
                     <div className={styles.forms}>
                         <label htmlFor="insurance">Dodatno osiguranje</label>
                         <input
-                            className={styles.input}
+                            className={styles.formCheckbox}
                             id="insurance"
                             name="insurance"
                             type="checkbox"
                             onChange={formik.handleChange}
-                            value={formik.values.insurance}
+                            checked={formik.values.insurance}
                         />
                     </div>
                     {formik.errors.insurance ? <div className={styles.error}>{formik.errors.insurance}</div> : null}
@@ -301,11 +304,13 @@ export default function EditContractForm({onCancel, data}) {
                             type="text"
                             onChange={formik.handleChange}
                             value={formik.values.price}
-                            disabled="disabled"
                         />
-                        <a onClick={calculatePrice} href={"#"} className={styles.linkie}>Izračunaj</a>
                     </div>
                     {formik.errors.price ? <div className={styles.error}>{formik.errors.price}</div> : null}
+
+                    <div>
+                        <a onClick={calculatePrice} href={"#"} className={styles.linkie}>Izračunaj</a>
+                    </div>
 
 
                     <button className={styles.button} type="submit">OK</button>

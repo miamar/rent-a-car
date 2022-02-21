@@ -123,7 +123,7 @@ export default function EditWorkerForm({onCancel, data}) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Podaci o zaposleniku</h1>
+                <h1 className={styles.titles}>Podaci o zaposleniku</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 

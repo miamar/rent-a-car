@@ -8,15 +8,12 @@ import Navigation from "./navigation";
 import {ProtectRoute} from "../components/router";
 
 const Office = (props) => {
-
     const [editedOffice, setEditedOffice] = useState(null)
     const [offices, setOffices] = useState(props.data)
     const [pageNumber, setPageNumber] = useState(1)
 
     const numberOfOffices = props.data.length
     const numberOfPages = Math.ceil(numberOfOffices / 5)
-
-    console.log("here I am")
 
     const deleteFromDatabase = async (values) => {
         const res = await fetch('api/delete-office', {
@@ -80,7 +77,7 @@ const Office = (props) => {
 
                 <Navigation/>
 
-                <h1 className="">Poslovnice</h1>
+                <h1 className={styles.titles}>Poslovnice</h1>
 
                 <div>
                     <table className={styles.tableall}>
@@ -96,8 +93,8 @@ const Office = (props) => {
                 </div>
 
                 <div>
-                    <button onClick={() => setEditedOffice('w')} className={styles.buttonMain}>Dodaj novo</button>
-                    <button className={styles.buttonMain}>
+                    <button onClick={() => setEditedOffice('w')} className={styles.button}>Dodaj novo</button>
+                    <button className={styles.button}>
                         <Link href="/home">
                             <a>Početna</a>
                         </Link>

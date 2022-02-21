@@ -78,8 +78,8 @@ export default function LoginForm(props) {
                     </div>
                     {formik.errors.password ? <div className={styles.error}>{formik.errors.password}</div> : null}
 
-                    <button className={styles.buttonMain} type="submit">Prijava</button>
-                    <button className={styles.buttonMain}>
+                    <button className={styles.button} type="submit">Prijava</button>
+                    <button className={styles.button}>
                         <Link href="/home">
                             <a>Odustani</a>
                         </Link>

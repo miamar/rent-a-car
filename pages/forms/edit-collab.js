@@ -85,7 +85,7 @@ export default function EditCollabForm({onCancel, data}) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Podaci vanjske suradnje</h1>
+                <h1 className={styles.titles}>Podaci vanjske suradnje</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 

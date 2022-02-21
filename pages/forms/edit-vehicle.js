@@ -109,7 +109,7 @@ export default function EditVehicleForm({onCancel, data}) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Podaci o vozilu</h1>
+                <h1 className={styles.titles}>Podaci o vozilu</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 

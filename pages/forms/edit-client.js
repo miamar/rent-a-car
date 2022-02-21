@@ -103,7 +103,7 @@ export default function EditClientForm({onCancel, data}) {
             </Head>
 
             <main className={styles.main}>
-                <h1 className="">Podaci o klijentu</h1>
+                <h1 className={styles.titles}>Podaci o klijentu</h1>
 
                 <form onSubmit={formik.handleSubmit}>
 

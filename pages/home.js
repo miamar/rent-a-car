@@ -8,13 +8,6 @@ import useAuth from "../context/auth/login";
 import Navigation from "./navigation";
 
 const Home = (props) => {
-    const {logout} = useAuth()
-
-    const formik = useFormik({
-        onSubmit: values => {
-            logout()
-        },
-    });
 
     return (
         <div className={styles.container}>

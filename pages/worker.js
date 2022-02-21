@@ -10,6 +10,10 @@ import {ProtectRoute} from "../components/router";
 const Worker = (props) => {
     const [editedWorker, setEditedWorker] = useState(null)
     const [workers, setWorkers] = useState(props.data)
+    const [pageNumber, setPageNumber] = useState(1)
+
+    const numberOfOffices = props.data.length
+    const numberOfPages = Math.ceil(numberOfOffices / 5)
 
     const deleteFromDatabase = async (values) => {
         const res = await fetch('api/delete-worker', {
@@ -24,23 +28,42 @@ const Worker = (props) => {
         setWorkers(workers.filter(worker => worker.id !== data.id));
     };
 
-    function renderTableData() {
+    function renderTableData(pageNumber) {
 
         return workers.map((worker, index) => {
             const { id, firstName, lastName, email, oib, dateOfBirth, address, phoneNumber, pay } = worker
+            if (index >= pageNumber*5-5 && index <= pageNumber*5-1) {
+                return (
+                    <tr key={id}>
+                        <td className={styles.tabletd}>{firstName}</td>
+                        <td className={styles.tabletd}>{lastName}</td>
+                        <td className={styles.tabletd}>{email}</td>
+                        <td className={styles.tabletd}>{oib}</td>
+                        <td className={styles.tabletd}>{address}</td>
+                        <td className={styles.tabletd}>{dateOfBirth.substr(0, 10)}</td>
+                        <td className={styles.tabletd}>{phoneNumber}</td>
+                        <td className={styles.tabletd}>{pay} kn</td>
+                        <td>
+                            <button className={styles.buttonTable} onClick={() => setEditedWorker(worker)}>Uredi
+                            </button>
+                        </td>
+                        <td>
+                            <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši
+                            </button>
+                        </td>
+                    </tr>
+                )
+            }
+        })
+    }
+
+    function renderPageNumbers(numberOfPages) {
+        let arrayPages = [...Array(numberOfPages+1).keys()]
+        arrayPages.shift()
+
+        return arrayPages.map((page) => {
             return (
-                <tr key={id}>
-                    <td className={styles.tabletd}>{firstName}</td>
-                    <td className={styles.tabletd}>{lastName}</td>
-                    <td className={styles.tabletd}>{email}</td>
-                    <td className={styles.tabletd}>{oib}</td>
-                    <td className={styles.tabletd}>{address}</td>
-                    <td className={styles.tabletd}>{dateOfBirth.substr(0,10)}</td>
-                    <td className={styles.tabletd}>{phoneNumber}</td>
-                    <td className={styles.tabletd}>{pay} kn</td>
-                    <td><button className={styles.buttonTable} onClick={() => setEditedWorker(worker)}>Uredi</button></td>
-                    <td><button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button></td>
-                </tr>
+                <a key={page} onClick={() => setPageNumber(page)} href={"#"} className={styles.linkPageView}>{page}</a>
             )
         })
     }
@@ -57,11 +80,11 @@ const Worker = (props) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className={styles.main}>
+            <main className={styles.titles}>
 
                 <Navigation/>
 
-                <h1 className="">Zaposlenici</h1>
+                <h1 className={styles.title}>Zaposlenici</h1>
 
                 <div>
                     <table className={styles.tableall}>
@@ -76,7 +99,7 @@ const Worker = (props) => {
                             <td className={styles.tablefirst}>broj mobitela</td>
                             <td className={styles.tablefirst}>plaća</td>
                         </tr>
-                        {renderTableData()}
+                        {renderTableData(pageNumber)}
                         </tbody>
                     </table>
                 </div>
@@ -88,6 +111,11 @@ const Worker = (props) => {
                             <a>Početna</a>
                         </Link>
                     </button>
+                </div>
+
+                <div className={styles.pageView}>
+                    <a className={styles.linkPageView}>Broj stranice:</a>
+                    {renderPageNumbers(numberOfPages)}
                 </div>
 
 

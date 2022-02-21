@@ -1,9 +1,8 @@
 .container {
-  padding: 0 2rem;
+
 }
 
 .main {
-  min-height: 80vh;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -23,6 +22,7 @@
   display: inline-block;
   font-size: 16px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .buttonCancel {
@@ -36,6 +36,7 @@
   display: inline-block;
   font-size: 16px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .footer {
@@ -69,6 +70,10 @@
   margin: 100px 0;
   line-height: 1.15;
   font-size: 3.5rem;
+}
+
+.titles {
+  padding: 50px 0 20px;
 }
 
 .title,
@@ -143,36 +148,27 @@
   justify-content: space-between;
   align-items: center;
   height: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  width: 400px;
+}
+
+.formCheckbox {
+  width: auto;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .input {
-  width: 100%;
+  width: 60%;
   padding: 5px 10px;
-  margin: 8px 0;
-  display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
-  margin-left: 5px;
 }
 
 .error {
   color: red;
   font-size: smaller;
-}
-
-.buttonMain {
-  background-color: #008CBA;
-  border: none;
-  color: white;
-  padding: 10px 15px;
-  margin: 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 8px;
 }
 
 .buttonTable {
@@ -186,6 +182,7 @@
   display: inline-block;
   font-size: 16px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .tableall {
@@ -197,6 +194,7 @@
   text-transform: uppercase;
   padding: 5px 25px 10px 10px;
   font-weight: 500;
+  max-width: 200px;
 }
 
 .tabletd {
@@ -245,6 +243,7 @@
   display: inline-block;
   font-size: 16px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {
