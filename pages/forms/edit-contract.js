@@ -297,6 +297,7 @@ export default function EditContractForm({onCancel, data}) {
                             name="openReturn"
                             type="checkbox"
                             onChange={formik.handleChange}
+                            value={formik.values.openReturn}
                             checked={formik.values.openReturn}
                         />
                     </div>
@@ -310,6 +311,7 @@ export default function EditContractForm({onCancel, data}) {
                             name="insurance"
                             type="checkbox"
                             onChange={formik.handleChange}
+                            value={formik.values.insurance}
                             checked={formik.values.insurance}
                         />
                     </div>
