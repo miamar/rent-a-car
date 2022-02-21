@@ -9,6 +9,7 @@ export default function EditContractForm({onCancel, data}) {
     const [clients, setClients] = useState(null)
     const [vehicles, setVehicles] = useState(null)
     const [workers, setWorkers] = useState(null)
+    const [price, setPrice] = useState(0)
 
     useEffect(() => {
         if (data) {
@@ -32,6 +33,17 @@ export default function EditContractForm({onCancel, data}) {
 
     const saveChanges = async (values) => {
         const res = await fetch('/api/edit-contract', {
+            method: 'PUT',
+            body: JSON.stringify(values),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        const data = await res.json();
+    };
+
+    const modifyVehicle = async (values) => {
+        const res = await fetch('/api/edit-vehicle-rented', {
             method: 'PUT',
             body: JSON.stringify(values),
             headers: {
@@ -97,17 +109,25 @@ export default function EditContractForm({onCancel, data}) {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
                 saveChanges(values);
+                //modifyVehicle(values);
                 if(confirm("Uspješno ste uredili zapis o ugovoru!")){
                     window.location.reload();
                 }
             } else {
                 createNewEntry(values);
+                //modifyVehicle(values);
                 if(confirm("Uspješno ste dodali novi ugovor!")){
                     window.location.reload();
                 }
             }
         },
     });
+
+
+
+    useEffect(() => {
+        calculatePrice()
+    }, [formik.values && JSON.stringify(formik.values)])
 
     const disablePastDate = () => {
         const today = new Date();
@@ -118,10 +138,10 @@ export default function EditContractForm({onCancel, data}) {
     };
 
     function calculatePrice() {
-        console.log(formik.values.price)
-        if(!vehicles) {
+        if(!vehicles || !formik) {
             return
         }
+
         let vehiclePricePerDay = 0
 
         for (let i=0; i<vehicles.length; i++) {
@@ -151,7 +171,7 @@ export default function EditContractForm({onCancel, data}) {
             openReturn = 100
         }
 
-        formik.values.price = diffInDays * (vehiclePricePerDay * discount) + premiumInsurance + openReturn
+        setPrice(diffInDays * (vehiclePricePerDay * discount) + premiumInsurance + openReturn)
     };
 
     function renderClientData() {
@@ -302,16 +322,11 @@ export default function EditContractForm({onCancel, data}) {
                             id="price"
                             name="price"
                             type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.price}
+                            disabled={true}
+                            value={price}
                         />
                     </div>
                     {formik.errors.price ? <div className={styles.error}>{formik.errors.price}</div> : null}
-
-                    <div>
-                        <a onClick={calculatePrice} href={"#"} className={styles.linkie}>Izračunaj</a>
-                    </div>
-
 
                     <button className={styles.button} type="submit">OK</button>
                     <button className={styles.buttonCancel} onClick={() => onCancel()}>Odustani</button>

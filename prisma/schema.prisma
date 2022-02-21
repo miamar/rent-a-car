@@ -55,7 +55,7 @@ model Vehicle {
   year         Int
   seats        Int
   transmission String
-  consumption  Int
+  consumption  Float?
   fuel         String
   price        Float
   rented       Boolean @default(false)

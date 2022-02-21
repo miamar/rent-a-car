@@ -1,7 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react'
 import Cookies from 'js-cookie';
 import {useRouter} from 'next/router';
-import {PrismaClient} from "@prisma/client";
 
 const AuthContext = createContext({});
 
@@ -56,9 +55,8 @@ export const AuthProvider = ({children}) => {
 
     const logout = () => {
         Cookies.remove('token');
-
         setUser(null);
-        window.location.pathname = '/login';
+        router.push("/login");
     };
 
     return (
