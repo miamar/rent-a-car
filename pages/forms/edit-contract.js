@@ -172,6 +172,7 @@ export default function EditContractForm({onCancel, data}) {
         }
 
         setPrice(diffInDays * (vehiclePricePerDay * discount) + premiumInsurance + openReturn)
+        formik.values.price = price
     };
 
     function renderClientData() {
@@ -325,7 +326,7 @@ export default function EditContractForm({onCancel, data}) {
                             name="price"
                             type="text"
                             disabled={true}
-                            value={price}
+                            value={formik.values.price}
                         />
                     </div>
                     {formik.errors.price ? <div className={styles.error}>{formik.errors.price}</div> : null}
