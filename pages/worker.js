@@ -102,10 +102,10 @@ const Worker = (props) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Navigation/>
-
             {user && user.role === "admin" ? (
                 <main className={styles.main}>
+
+                    <Navigation/>
 
                     <h1 className={styles.titles}>Zaposlenici</h1>
 
@@ -143,7 +143,7 @@ const Worker = (props) => {
 
 
                 </main>
-            ) : null}
+            ) :  <Navigation/>}
 
         </div>
     )
