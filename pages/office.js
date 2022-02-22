@@ -11,6 +11,8 @@ import useAuth from "../context/auth/login";
 const Office = (props) => {
 
     const {user} = useAuth()
+
+    console.log("parararam", user)
     const [editedOffice, setEditedOffice] = useState(null)
     const [offices, setOffices] = useState(props.data)
     const [pageNumber, setPageNumber] = useState(1)
@@ -45,7 +47,7 @@ const Office = (props) => {
                             <button className={styles.buttonTable} onClick={() => setEditedOffice(office)}>Uredi</button>
                         </td>
                         <td>
-                            {user.role && user.role === "admin" ? (
+                            {user && user.role === "admin" ? (
                                 <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>
                                     Obriši
                                 </button>

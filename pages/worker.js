@@ -54,14 +54,14 @@ const Worker = (props) => {
                             </button>
                         </td>
                         <td>
-                            {user.role === "admin" ? (
+                            {user && user.role === "admin" ? (
                                 <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>
                                     Obriši
                                 </button>
                             ) : null}
                         </td>
                         <td>
-                            {user.role === "admin" ? (
+                            {user && user.role === "admin" ? (
                                 <button className={styles.buttonTable} onClick={() => setManagePay(worker)}>
                                     Plaća
                                 </button>

@@ -48,7 +48,7 @@ const Collab = (props) => {
                             </button>
                         </td>
                         <td>
-                            {user.role === "admin" ? (
+                            {user && user.role === "admin" ? (
                                 <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>
                                     Obriši
                                 </button>
