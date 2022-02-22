@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         website
     } = req.body
 
-    await prisma.collaborator.update({
+    const message = await prisma.collaborator.update({
         where: {
             id: id,
         },
@@ -22,4 +22,5 @@ export default async function handler(req, res) {
             website: website
         },
     })
+    res.json(message)
 }

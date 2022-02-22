@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         dateOfBirth
     } = req.body
 
-    await prisma.client.update({
+    const message = await prisma.client.update({
         where: {
             id: id,
         },
@@ -28,4 +28,5 @@ export default async function handler(req, res) {
             phoneNumber: phoneNumber
         },
     })
+    res.json(message)
 }

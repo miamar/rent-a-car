@@ -47,7 +47,7 @@ export default function EditWorkerPay({onCancel, data}) {
         },
         validate,
         onSubmit: values => {
-            saveChanges(values).then(r => {
+            saveChanges(values).then(() => {
                 setErrorMessage("Uspjesno napravljeno")
                 setErrorVisible(true)
                 setTimeout(() => {window.location.reload()}, 1000);

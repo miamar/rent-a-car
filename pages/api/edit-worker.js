@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         finalPay
     } = req.body
 
-    await prisma.worker.update({
+    const message = await prisma.worker.update({
         where: {
             id: id,
         },
@@ -44,4 +44,5 @@ export default async function handler(req, res) {
             finalPay: finalPay ? parseFloat(finalPay) : parseFloat(basePay)
         },
     })
+    res.json(message)
 }
