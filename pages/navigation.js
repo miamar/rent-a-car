@@ -4,6 +4,7 @@ import useAuth from "../context/auth/login";
 
 export default function Navigation() {
     const {logout} = useAuth()
+    const {user} = useAuth()
 
     return (
         <div className={styles.navigation}>
@@ -19,11 +20,13 @@ export default function Navigation() {
                 </a>
             </Link>
 
-            <Link href="/worker">
-                <a className={styles.navigationElements}>
-                    Zaposlenici
-                </a>
-            </Link>
+            {user && user.role === "admin" ? (
+                <Link href="/worker">
+                    <a className={styles.navigationElements}>
+                        Zaposlenici
+                    </a>
+                </Link>
+            ) : null}
 
             <Link href="/client">
                 <a className={styles.navigationElements}>

@@ -9,6 +9,8 @@ import Navigation from "./navigation";
 
 const Home = (props) => {
 
+    const {user} = useAuth()
+
     return (
         <div className={styles.container}>
             <Head>
@@ -34,12 +36,14 @@ const Home = (props) => {
                         </a>
                     </Link>
 
-                    <Link href="/worker">
-                        <a className={styles.card}>
-                            <h2>Zaposlenici &rarr;</h2>
-                            <p>Informacije o zaposlenicima, unos novih i izmjena postojećih podataka.</p>
-                        </a>
-                    </Link>
+                    {user && user.role === "admin" ? (
+                        <Link href="/worker">
+                            <a className={styles.card}>
+                                <h2>Zaposlenici &rarr;</h2>
+                                <p>Informacije o zaposlenicima, unos novih i izmjena postojećih podataka.</p>
+                            </a>
+                        </Link>
+                    ) : null}
 
                     <Link href="/client">
                         <a className={styles.card}>

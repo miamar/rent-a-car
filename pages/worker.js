@@ -93,6 +93,8 @@ const Worker = (props) => {
     }
 
     return (
+
+
         <div className={styles.container}>
             <Head>
                 <title>Vertigo</title>
@@ -100,31 +102,31 @@ const Worker = (props) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className={styles.main}>
+            <Navigation/>
 
-                <Navigation/>
+            {user && user.role === "admin" ? (
+                <main className={styles.main}>
 
-                <h1 className={styles.titles}>Zaposlenici</h1>
+                    <h1 className={styles.titles}>Zaposlenici</h1>
 
-                <div>
-                    <table className={styles.tableall}>
-                        <tbody>
-                        <tr >
-                            <td className={styles.tablefirst}>ime</td>
-                            <td className={styles.tablefirst}>prezime</td>
-                            <td className={styles.tablefirst}>email</td>
-                            <td className={styles.tablefirst}>oib</td>
-                            <td className={styles.tablefirst}>adresa</td>
-                            <td className={styles.tablefirst}>datum rođenja</td>
-                            <td className={styles.tablefirst}>broj mobitela</td>
-                            <td className={styles.tablefirst}>plaća</td>
-                        </tr>
-                        {renderTableData(pageNumber)}
-                        </tbody>
-                    </table>
-                </div>
+                    <div>
+                        <table className={styles.tableall}>
+                            <tbody>
+                            <tr >
+                                <td className={styles.tablefirst}>ime</td>
+                                <td className={styles.tablefirst}>prezime</td>
+                                <td className={styles.tablefirst}>email</td>
+                                <td className={styles.tablefirst}>oib</td>
+                                <td className={styles.tablefirst}>adresa</td>
+                                <td className={styles.tablefirst}>datum rođenja</td>
+                                <td className={styles.tablefirst}>broj mobitela</td>
+                                <td className={styles.tablefirst}>plaća</td>
+                            </tr>
+                            {renderTableData(pageNumber)}
+                            </tbody>
+                        </table>
+                    </div>
 
-                {user && user.role === "admin" ? (
                     <div>
                         <button onClick={() => setEditedWorker('w')} className={styles.button}>Dodaj novo</button>
                         <button className={styles.button}>
@@ -133,15 +135,15 @@ const Worker = (props) => {
                             </Link>
                         </button>
                     </div>
-                ) : null}
 
-                <div className={styles.pageView}>
-                    <a className={styles.linkPageView}>Broj stranice:</a>
-                    {renderPageNumbers(numberOfPages)}
-                </div>
+                    <div className={styles.pageView}>
+                        <a className={styles.linkPageView}>Broj stranice:</a>
+                        {renderPageNumbers(numberOfPages)}
+                    </div>
 
 
-            </main>
+                </main>
+            ) : null}
 
         </div>
     )
