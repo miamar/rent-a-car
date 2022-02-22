@@ -124,14 +124,16 @@ const Worker = (props) => {
                     </table>
                 </div>
 
-                <div>
-                    <button onClick={() => setEditedWorker('w')} className={styles.button}>Dodaj novo</button>
-                    <button className={styles.button}>
-                        <Link href="/home">
-                            <a>Početna</a>
-                        </Link>
-                    </button>
-                </div>
+                {user && user.role === "admin" ? (
+                    <div>
+                        <button onClick={() => setEditedWorker('w')} className={styles.button}>Dodaj novo</button>
+                        <button className={styles.button}>
+                            <Link href="/home">
+                                <a>Početna</a>
+                            </Link>
+                        </button>
+                    </div>
+                ) : null}
 
                 <div className={styles.pageView}>
                     <a className={styles.linkPageView}>Broj stranice:</a>
