@@ -1,10 +1,12 @@
 import React, {createContext, useContext, useEffect, useState} from 'react'
 import Cookies from 'js-cookie';
 import {useRouter} from 'next/router';
+import useError from "../error/error";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
+    const {setErrorMessage, setErrorVisible} = useError();
     const router = useRouter();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -47,15 +49,17 @@ export const AuthProvider = ({children}) => {
         if (loginResult && loginResult.user) {
             setUser(loginResult.user)
             Cookies.set('token', loginResult.user.id, {expires: 60});
+            setErrorVisible(false)
             router.push("/");
         } else {
-
+            setErrorMessage("Krivi podaci")
+            setErrorVisible(true)
         }
     };
 
     const logout = () => {
         Cookies.remove('token');
-        setUser(null);
+        setUser({data: null, user: ''});
         router.push("/login");
     };
 

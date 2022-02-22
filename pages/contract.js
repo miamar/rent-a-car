@@ -6,8 +6,11 @@ import EditContractForm from "./forms/edit-contract";
 import Link from "next/link";
 import Navigation from "./navigation";
 import {ProtectRoute} from "../components/router";
+import useAuth from "../context/auth/login";
 
 const Contract = (props) => {
+
+    const {user} = useAuth()
     const [editedContract, setEditedContract] = useState(null)
     const [contracts, setContracts] = useState(props.data)
     const [pageNumber, setPageNumber] = useState(1)
@@ -54,8 +57,11 @@ const Contract = (props) => {
                             </button>
                         </td>
                         <td>
-                            <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši
-                            </button>
+                            {user.role === "admin" ? (
+                                <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>
+                                    Obriši
+                                </button>
+                            ) : null}
                         </td>
                     </tr>
                 )

@@ -6,8 +6,11 @@ import EditOfficeForm from "./forms/edit-office";
 import Link from "next/link";
 import Navigation from "./navigation";
 import {ProtectRoute} from "../components/router";
+import useAuth from "../context/auth/login";
 
 const Office = (props) => {
+
+    const {user} = useAuth()
     const [editedOffice, setEditedOffice] = useState(null)
     const [offices, setOffices] = useState(props.data)
     const [pageNumber, setPageNumber] = useState(1)
@@ -42,7 +45,11 @@ const Office = (props) => {
                             <button className={styles.buttonTable} onClick={() => setEditedOffice(office)}>Uredi</button>
                         </td>
                         <td>
-                            <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši</button>
+                            {user.role && user.role === "admin" ? (
+                                <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>
+                                    Obriši
+                                </button>
+                            ) : null}
                         </td>
                     </tr>
                 )

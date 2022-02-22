@@ -6,8 +6,11 @@ import EditCollabForm from "./forms/edit-collab";
 import Link from "next/link";
 import Navigation from "./navigation";
 import {ProtectRoute} from "../components/router";
+import useAuth from "../context/auth/login";
 
 const Collab = (props) => {
+
+    const {user} = useAuth()
     const [editedCollab, setEditedCollab] = useState(null)
     const [collabs, setCollabs] = useState(props.data)
     const [pageNumber, setPageNumber] = useState(1)
@@ -45,8 +48,11 @@ const Collab = (props) => {
                             </button>
                         </td>
                         <td>
-                            <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši
-                            </button>
+                            {user.role === "admin" ? (
+                                <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>
+                                    Obriši
+                                </button>
+                            ) : null}
                         </td>
                     </tr>
                 )

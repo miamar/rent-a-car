@@ -2,9 +2,13 @@ import styles from "../../styles/Home.module.css";
 import Head from "next/head";
 import React, {useState} from 'react';
 import { useFormik } from 'formik';
+import useError from "../../context/error/error";
 
 export default function EditWorkerForm({onCancel, data}) {
+    console.log(data)
     const [selected, setSelected] = useState(data)
+
+    const {setErrorMessage, setErrorVisible} = useError();
 
     const createNewEntry = async (values) => {
         const res = await fetch('/api/new-worker', {
@@ -31,10 +35,6 @@ export default function EditWorkerForm({onCancel, data}) {
     const validate = values => {
         const errors = {};
 
-        if (!values.role) {
-            errors.role = 'Required';
-        }
-
         if (!values.username) {
             errors.username = 'Required';
         } else if (values.username.length < 8) {
@@ -45,12 +45,6 @@ export default function EditWorkerForm({onCancel, data}) {
             errors.email = 'Required';
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
             errors.email = 'Invalid email address';
-        }
-
-        if (!values.password) {
-            errors.password = 'Required';
-        } else if (values.password.length < 8) {
-            errors.password = 'Must be 8 characters or more';
         }
 
         if (!values.oib) {
@@ -81,6 +75,7 @@ export default function EditWorkerForm({onCancel, data}) {
 
         return errors;
     };
+
     // Pass the useFormik() hook initial form values and a submit function that will
     // be called when the form is submitted
     const formik = useFormik({
@@ -96,24 +91,33 @@ export default function EditWorkerForm({onCancel, data}) {
             address: selected && selected.address ? selected.address : '',
             phoneNumber: selected && selected.phoneNumber ? selected.phoneNumber : '',
             dateOfBirth: selected && selected.dateOfBirth ? selected.dateOfBirth.substr(0,10) : '',
-            pay: selected && selected.pay ? selected.pay : ''
+            basePay: selected && selected.basePay ? selected.basePay : ''
         },
         validate,
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
-                saveChanges(values);
-                if(confirm("Uspješno ste uredili zapis o zaposleniku!")){
-                    window.location.reload();
-                }
+                saveChanges(values).then(r => {
+                    setErrorMessage("Uspjesno napravljeno")
+                    setErrorVisible(true)
+                    setTimeout(() => {window.location.reload()}, 1000);
+                }).catch(e => {
+                    setErrorMessage(e.message)
+                    setErrorVisible(true)
+                });
             } else {
-                createNewEntry(values);
-                if(confirm("Uspješno ste dodali novog zaposlenika!")){
-                    window.location.reload();
-                }
+                createNewEntry(values).then(r => {
+                    setErrorMessage("Uspjesno napravljeno")
+                    setErrorVisible(true)
+                    setTimeout(() => {window.location.reload()}, 1000);
+                }).catch(e => {
+                    setErrorMessage(e.message)
+                    setErrorVisible(true)
+                });
             }
         },
     });
+
     return (
         <div className={styles.container}>
             <Head>
@@ -126,21 +130,6 @@ export default function EditWorkerForm({onCancel, data}) {
                 <h1 className={styles.titles}>Podaci o zaposleniku</h1>
 
                 <form onSubmit={formik.handleSubmit}>
-
-                    <div className={styles.forms}>
-                        <label htmlFor="role">Uloga</label>
-                        <select
-                            id="role"
-                            name="role"
-                            onChange={formik.handleChange}
-                            value={formik.values.role}
-                            className={styles.input} >
-                            <option value=""/>
-                            <option value="user">user</option>
-                            <option value="admin">admin</option>
-                        </select>
-                    </div>
-                    {formik.errors.role ? <div className={styles.error}>{formik.errors.role}</div> : null}
 
                     <div className={styles.forms}>
                         <label htmlFor="username">Korisničko ime</label>
@@ -167,19 +156,6 @@ export default function EditWorkerForm({onCancel, data}) {
                         />
                     </div>
                     {formik.errors.email ? <div className={styles.error}>{formik.errors.email}</div> : null}
-
-                    <div className={styles.forms}>
-                        <label htmlFor="password">Lozinka</label>
-                        <input
-                            className={styles.input}
-                            id="password"
-                            name="password"
-                            type="password"
-                            onChange={formik.handleChange}
-                            value={formik.values.password}
-                        />
-                    </div>
-                    {formik.errors.password ? <div className={styles.error}>{formik.errors.password}</div> : null}
 
                     <div className={styles.forms}>
                         <label htmlFor="firstName">Ime</label>
@@ -260,14 +236,14 @@ export default function EditWorkerForm({onCancel, data}) {
                     {formik.errors.dateOfBirth ? <div className={styles.error}>{formik.errors.dateOfBirth}</div> : null}
 
                     <div className={styles.forms}>
-                        <label htmlFor="pay">Plaća</label>
+                        <label htmlFor="basePay">Plaća</label>
                         <input
                             className={styles.input}
-                            id="pay"
-                            name="pay"
+                            id="basePay"
+                            name="basePay"
                             type="text"
                             onChange={formik.handleChange}
-                            value={formik.values.pay}
+                            value={formik.values.basePay}
                         />
                     </div>
 

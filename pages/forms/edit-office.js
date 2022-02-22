@@ -2,9 +2,12 @@ import styles from "../../styles/Home.module.css";
 import Head from "next/head";
 import React, {useEffect, useState} from 'react';
 import { useFormik } from 'formik';
+import useError from "../../context/error/error";
 
 export default function EditOfficeForm({onCancel, data}) {
     const [selected, setSelected] = useState(data)
+
+    const {setErrorMessage, setErrorVisible} = useError();
 
     const createNewEntry = async (values) => {
         const res = await fetch('/api/new-office', {
@@ -58,15 +61,23 @@ export default function EditOfficeForm({onCancel, data}) {
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
-                saveChanges(values);
-                if(confirm("Uspješno ste uredili zapis o poslovnici!")){
-                    window.location.reload();
-                }
+                saveChanges(values).then(r => {
+                    setErrorMessage("Uspjesno napravljeno")
+                    setErrorVisible(true)
+                    setTimeout(() => {window.location.reload()}, 1000);
+                }).catch(e => {
+                    setErrorMessage(e.message)
+                    setErrorVisible(true)
+                });
             } else {
-                createNewEntry(values);
-                if(confirm("Uspješno ste dodali novu poslovnicu!")){
-                    window.location.reload();
-                }
+                createNewEntry(values).then(r => {
+                    setErrorMessage("Uspjesno napravljeno")
+                    setErrorVisible(true)
+                    setTimeout(() => {window.location.reload()}, 1000);
+                }).catch(e => {
+                    setErrorMessage(e.message)
+                    setErrorVisible(true)
+                });
             }
         },
     });

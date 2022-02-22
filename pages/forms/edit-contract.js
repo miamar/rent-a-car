@@ -121,6 +121,7 @@ export default function EditContractForm({onCancel, data}) {
                 saveChanges(values).then(r => {
                     setErrorMessage("Uspjesno napravljeno")
                     setErrorVisible(true)
+                    setTimeout(() => {window.location.reload()}, 1000);
                 }).catch(e => {
                     setErrorMessage(e.message)
                     setErrorVisible(true)
@@ -129,6 +130,7 @@ export default function EditContractForm({onCancel, data}) {
                 createNewEntry(values).then(r => {
                     setErrorMessage("Uspjesno napravljeno")
                     setErrorVisible(true)
+                    setTimeout(() => {window.location.reload()}, 1000);
                 }).catch(e => {
                     setErrorMessage(e.message)
                     setErrorVisible(true)

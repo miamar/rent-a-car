@@ -6,8 +6,11 @@ import {useState} from "react";
 import EditClientForm from "./forms/edit-client";
 import {ProtectRoute} from "../components/router";
 import Navigation from "./navigation";
+import useAuth from "../context/auth/login";
 
 const Client = (props) => {
+
+    const {user} = useAuth()
     const [editedClient, setEditedClient] = useState(null)
     const [clients, setClients] = useState(props.data)
     const [pageNumber, setPageNumber] = useState(1)
@@ -46,8 +49,11 @@ const Client = (props) => {
                             </button>
                         </td>
                         <td>
-                            <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši
-                            </button>
+                            {user.role === "admin" ? (
+                                <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>
+                                    Obriši
+                                </button>
+                            ) : null}
                         </td>
                     </tr>
                 )

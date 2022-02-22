@@ -2,9 +2,12 @@ import styles from "../../styles/Home.module.css";
 import Head from "next/head";
 import React, {useState} from 'react';
 import { useFormik } from 'formik';
+import useError from "../../context/error/error";
 
 export default function EditVehicleForm({onCancel, data}) {
     const [selected, setSelected] = useState(data)
+
+    const {setErrorMessage, setErrorVisible} = useError();
 
     const createNewEntry = async (values) => {
         const res = await fetch('/api/new-vehicle', {
@@ -88,17 +91,23 @@ export default function EditVehicleForm({onCancel, data}) {
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
             if (selected !== 'w') {
-                saveChanges(values)
-                    .then(res => {
-                    console.log("uspjeh", res)
-                })
-                    .catch(e => console.log(e))
-
+                saveChanges(values).then(r => {
+                    setErrorMessage("Uspjesno napravljeno")
+                    setErrorVisible(true)
+                    setTimeout(() => {window.location.reload()}, 1000);
+                }).catch(e => {
+                    setErrorMessage(e.message)
+                    setErrorVisible(true)
+                });
             } else {
-                createNewEntry(values);
-                if(confirm("Uspješno ste dodali novo vozilo!")){
-                    window.location.reload();
-                }
+                createNewEntry(values).then(r => {
+                    setErrorMessage("Uspjesno napravljeno")
+                    setErrorVisible(true)
+                    setTimeout(() => {window.location.reload()}, 1000);
+                }).catch(e => {
+                    setErrorMessage(e.message)
+                    setErrorVisible(true)
+                });
             }
         },
     });

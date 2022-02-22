@@ -22,16 +22,22 @@ model Worker {
   id           Int @default(autoincrement()) @id
   username     String @unique
   email        String @unique
-  password     String
+  password     String?
   firstName    String
   lastName     String
   oib          String
   address      String
   dateOfBirth  DateTime
   phoneNumber  String
-  position     String
-  pay          Int
-  role         String
+  position     String?
+  role         String?
+  basePay      Float?
+  afterHours   Float?
+  workDays     Int?
+  distToJob    Float?
+  yearsInCo    Int?
+  bonus        Boolean?
+  finalPay     Float?
   contract     Contract[]
 }
 

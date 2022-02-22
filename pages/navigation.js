@@ -49,7 +49,7 @@ export default function Navigation() {
                 </a>
             </Link>
 
-            <button className={styles.navButton} type="button" onSubmit={() => logout()}>Odjava</button>
+            <button className={styles.navButton} type="submit" onClick={() => logout()}>Odjava</button>
         </div>
     )
 }

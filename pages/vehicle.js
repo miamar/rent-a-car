@@ -6,8 +6,11 @@ import EditVehicleForm from "./forms/edit-vehicle";
 import Link from "next/link";
 import {ProtectRoute} from "../components/router";
 import Navigation from "./navigation";
+import useAuth from "../context/auth/login";
 
 const Vehicle = (props) => {
+
+    const {user} = useAuth()
     const [editedVehicle, setEditedVehicle] = useState(null)
     const [vehicles, setVehicles] = useState(props.data)
     const [pageNumber, setPageNumber] = useState(1)
@@ -44,16 +47,16 @@ const Vehicle = (props) => {
                         <td className={styles.tabletd}>{transmission}</td>
                         <td className={styles.tabletd}>{fuel}</td>
                         <td className={styles.tabletd}>{price} kn</td>
-                        <td className={styles.tabletd}>
-                            {rented === true ? "da" : "ne"}
-                        </td>
                         <td>
                             <button className={styles.buttonTable} onClick={() => setEditedVehicle(vehicle)}>Uredi
                             </button>
                         </td>
                         <td>
-                            <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>Obriši
-                            </button>
+                            {user.role === "admin" ? (
+                                <button className={styles.buttonTable} onClick={() => deleteFromDatabase({id: id})}>
+                                    Obriši
+                                </button>
+                            ) : null}
                         </td>
                     </tr>
                 )
@@ -103,7 +106,6 @@ const Vehicle = (props) => {
                             <td className={styles.tablefirst}>mjenjač</td>
                             <td className={styles.tablefirst}>gorivo</td>
                             <td className={styles.tablefirst}>cijena</td>
-                            <td className={styles.tablefirst}>iznajmljen</td>
                         </tr>
                         {renderTableData(pageNumber)}
                         </tbody>

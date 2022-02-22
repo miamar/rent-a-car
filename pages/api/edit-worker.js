@@ -5,17 +5,21 @@ const prisma = new PrismaClient()
 export default async function handler(req, res) {
     const {
         id,
-        role,
         username,
         email,
-        password,
         firstName,
         lastName,
         oib,
         address,
         phoneNumber,
         dateOfBirth,
-        pay
+        basePay,
+        afterHours,
+        workDays,
+        distToJob,
+        yearsInCo,
+        bonus,
+        finalPay
     } = req.body
 
     await prisma.worker.update({
@@ -24,17 +28,20 @@ export default async function handler(req, res) {
         },
         data: {
             username: username,
-            role: role,
             email: email,
-            password: password,
             firstName: firstName,
             lastName: lastName,
             oib: oib,
             address: address,
             dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : new Date(),
             phoneNumber: phoneNumber,
-            pay: pay ? parseFloat(pay) : 0,
-            position: ""
+            basePay: basePay ? parseFloat(basePay) : 0,
+            afterHours: afterHours ? parseFloat(afterHours) : 0,
+            workDays: workDays ? parseInt(workDays) : 0,
+            distToJob: distToJob ? parseFloat(distToJob) : 0,
+            yearsInCo: yearsInCo ? parseInt(yearsInCo) : 0,
+            bonus: bonus ? true : false,
+            finalPay: finalPay ? parseFloat(finalPay) : parseFloat(basePay)
         },
     })
 }
